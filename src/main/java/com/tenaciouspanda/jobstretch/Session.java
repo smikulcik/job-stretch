@@ -52,4 +52,12 @@ public class Session {
         this.currentUser = null;
         StaticConnection.closeConnection();
     }
+    
+    public User[] searchUsers(String fname, String lname){
+        return DBconnection.searchUser(fname, lname);
+    }
+
+    public void addConnection(User newUser) {
+        DBconnection.addContact(currentUser.getUserID(), newUser.getUserID());
+    }
 }

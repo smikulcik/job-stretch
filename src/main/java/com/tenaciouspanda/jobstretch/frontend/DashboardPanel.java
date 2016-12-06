@@ -155,7 +155,7 @@ public class DashboardPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void addConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addConnectionButtonActionPerformed
-        // TODO add your handling code here:
+        this.view.displayView("AddConnectionPanel");
     }//GEN-LAST:event_addConnectionButtonActionPerformed
 
     private void editUserProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserProfileButtonActionPerformed

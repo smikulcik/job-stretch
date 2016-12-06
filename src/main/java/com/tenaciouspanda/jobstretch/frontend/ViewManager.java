@@ -31,6 +31,7 @@ public class ViewManager extends JFrame {
         RegistrationPanel rp = new RegistrationPanel(session, this);
         UserFoundPanel ufp = new UserFoundPanel(session, this);
         UserProfilePanel upp = new UserProfilePanel(session, this);
+        AddConnectionPanel acp = new AddConnectionPanel(session, this);
         
         cardPanel.add(dashboard, "DashboardPanel");
         cardPanel.add(login, "LoginPanel");
@@ -40,6 +41,7 @@ public class ViewManager extends JFrame {
         cardPanel.add(rp, "RegistrationPanel");
         cardPanel.add(ufp, "UserFoundPanel");
         cardPanel.add(upp, "UserProfilePanel");
+        cardPanel.add(acp, "AddConnectionPanel");
         add(cardPanel);
         displayView("LoginPanel");
         setStatus("Initialized");
