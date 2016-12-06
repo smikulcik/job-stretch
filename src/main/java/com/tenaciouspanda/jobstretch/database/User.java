@@ -13,7 +13,7 @@ public class User {
     private Date startDate,endDate;
     private boolean employed;
     private float lat,lon;
-    User(int uID) {
+    public User(int uID) {
         userID=uID;
         zip=0;
         employed=false;
@@ -368,5 +368,10 @@ public class User {
      */
     public ArrayList<User> getContacts() {
         return connections;
+    }
+    
+    @Override
+    public String toString(){
+        return String.format("User %d: %s, %s %s, %s", userID, userName, fname, lname, jobTitle);
     }
 }

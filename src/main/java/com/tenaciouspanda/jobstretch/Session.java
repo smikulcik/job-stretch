@@ -21,7 +21,7 @@ public class Session {
     public boolean authenticate(String username, String password){
         int returned = DBconnection.checkLoginCred(username, password);
         if(returned!=DBconnection.RESULT_CONNECT_FAILED && returned != DBconnection.RESULT_EXIST) {
-            DBconnection.setUser(currentUser, returned);
+            currentUser = new User(returned);
             DBconnection.setContacts(currentUser);
             return true;
         }
