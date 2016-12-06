@@ -13,6 +13,7 @@ public class TestMain {
     public static void main(String[] args) {
         (new GeocoderTester()).testAll();
         (new SessionTester()).testAll();
+        (new DBTester()).testAll();
         System.out.println("All tests successful");
     }
 }
