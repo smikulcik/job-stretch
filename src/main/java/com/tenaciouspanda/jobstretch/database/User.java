@@ -1,4 +1,3 @@
-//Keep, 
 package com.tenaciouspanda.jobstretch.database;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,7 +20,7 @@ public class User {
         DBconnection.setUser(this, userID);
     }
     /**
-    * Initializes contact list for the user. Should be used after user logs in.
+    * Initializes contact list for the user. Should be called after user logs in.
     * */
     public void setContacts() {
         DBconnection.setContacts(this);
@@ -57,7 +56,7 @@ public class User {
         summary=sum.trim();
         employed=emp;
         try {
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             if(!start.equals(""))
                 startDate = df.parse(start);
             if(!end.equals(""))
@@ -90,12 +89,24 @@ public class User {
     public void addToContactList(User contact) {
         connections.add(contact);
     }
+    public void removeFromContactList(int contactID) {
+        boolean found=false;
+        for (User u : connections) {
+            if(u.getUserID()==contactID) {
+                found=true;
+                connections.remove(u);
+                break;
+            }
+        }
+        if(found)
+            DBconnection.removeContact(userID, contactID);
+    }
     /**
      * Used for adding new contacts to the user's contact list and to the database.
      * @param contact 
      */
     public void addNewContact(User contact) {
-        connections.add(contact);
+        addToContactList(contact);
         DBconnection.addContact(this.userID, contact.getUserID());
     }
     
@@ -117,7 +128,7 @@ public class User {
      * Sets username, should only be used by DBconnection.
      * @param u
      */
-    public void setUserName(String u) {
+    protected void setUserName(String u) {
         userName=u;
     }
     /**
@@ -133,7 +144,7 @@ public class User {
      * Sets user's first name, should only be used by DBconnection.
      * @param f 
      */
-    public void setFName(String f) {
+    protected void setFName(String f) {
         fname = f;
     }
     /**
@@ -149,7 +160,7 @@ public class User {
      * Sets user's last name, should only be used by DBconnection.
      * @param l
      */
-    public void setLName(String l) {
+    protected void setLName(String l) {
         lname = l;
     }
     /**
@@ -165,7 +176,7 @@ public class User {
      * Sets user's street, should only be used by DBconnection.
      * @param s
      */
-    public void setStreet(String s) {
+    protected void setStreet(String s) {
         street = s;
     }
     /**
@@ -181,7 +192,7 @@ public class User {
      * Sets user's city, should only be used by DBconnection.
      * @param c
      */
-    public void setCity(String c) {
+    protected void setCity(String c) {
         city = c;
     }
     /**
@@ -197,7 +208,7 @@ public class User {
      * Sets user's state, should only be used by DBconnection.
      * @param s
      */
-    public void setState(String s) {
+    protected void setState(String s) {
         state = s;
     }
     /**
@@ -211,7 +222,7 @@ public class User {
      * Sets user's zip code, should only be used by DBconnection.
      * @param z
      */
-    public void setZip(int z) {
+    protected void setZip(int z) {
         zip = z;
     }
     /**
@@ -227,7 +238,7 @@ public class User {
      * Sets user's business, should only be used by DBconnection.
      * @param b
      */
-    public void setBusiness(String b) {
+    protected void setBusiness(String b) {
         business = b;
     }
     /**
@@ -243,7 +254,7 @@ public class User {
      * Sets user's job title, should only be used by DBconnection.
      * @param j
      */
-    public void setJobTitle(String j) {
+    protected void setJobTitle(String j) {
         jobTitle = j;
     }
     /**
@@ -268,7 +279,7 @@ public class User {
      * Set's user's start date, should only be used by DBconnection.
      * @param s 
      */
-    public void setStartDate(Date s) {
+    protected void setStartDate(Date s) {
         try {
             startDate = s;
         } catch (Exception ex) {
@@ -280,8 +291,8 @@ public class User {
      * @return 
      */
     public String getEndDateString() {
-        if (startDate!=null)
-            return startDate.toString();
+        if (endDate!=null)
+            return endDate.toString();
         return "";
     }
     /**
@@ -297,7 +308,7 @@ public class User {
      * Set's user's end date, should only be used by DBconnection.
      * @param s 
      */
-    public void setEndDate(Date s) {
+    protected void setEndDate(Date s) {
         try {
             endDate = s;
         } catch (Exception ex) {
@@ -317,7 +328,7 @@ public class User {
      * Set's user's summary, should only be used by DBconnection.
      * @param s 
      */
-    public void setSummary(String s) {
+    protected void setSummary(String s) {
         summary = s;
     }
     /**
@@ -331,7 +342,7 @@ public class User {
      * Set's user's employment status, should only be used by DBconnection.
      * @param e
      */
-    public void setEmployed(boolean e) {
+    protected void setEmployed(boolean e) {
         employed=e;
     }
     /**
@@ -345,7 +356,7 @@ public class User {
      * Set's latitude location for user, should only be used by DBconnection.
      * @param l 
      */
-    public void setLat(float l) {
+    protected void setLat(float l) {
         lat = l;
     }
     /**
@@ -359,7 +370,7 @@ public class User {
      * Set's longitude location for user, should only be used by DBconnection.
      * @param l 
      */
-    public void setLon(float l) {
+    protected void setLon(float l) {
         lon = l;
     }
     /**
@@ -368,10 +379,5 @@ public class User {
      */
     public ArrayList<User> getContacts() {
         return connections;
-    }
-    
-    @Override
-    public String toString(){
-        return String.format("%s %s", fname, lname);
     }
 }
