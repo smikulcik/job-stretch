@@ -112,9 +112,6 @@ public class DBTester {
                 else
                     System.out.println("Working!");
                 //finds users based on first and last name and returns an array list of user objects
-                ArrayList<User> results = DBconnection.searchUser("","");
-                for (User i : results)
-                    System.out.println(i.getUserID()+" "+i.getFName()+" "+i.getLName());
             }
             else {
                 System.out.println("Not working.");
