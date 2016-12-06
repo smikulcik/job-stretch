@@ -1,9 +1,8 @@
-//Keep, create variables and functions to keep,retrieve data
 package com.tenaciouspanda.jobstretch.database;
-
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class Business {
     private String busName;
@@ -11,60 +10,79 @@ public class Business {
     private String busWebsite;
     private String busSummary;
     private Date busFounded;
-    private String[] busLocations;
+    private ArrayList<BusLocations> busLocations = new ArrayList();
     Business(String n) {
         busName = n;
         DBconnection.getBusiness(this);
     }
-    public void updateBus(String n, String i, String w, String s, Date f, String[] l) {
+    public boolean updateBus(String n, String i, String w, String s, Date f) {
         busName = n;
         busIndustry = i;
         busWebsite = w;
         busSummary = s;
         busFounded = f;
-        busLocations = l;
-        //DBconnection.updateBusiness(n,i,w,s,f,l);
+        return DBconnection.updateBusiness(n,i,w,s,f);
     }
-    //this update function handles date founded as a String and converts it into a Date variable.
-    public void updateBus(String n, String i, String w, String s, String f, String[] l) {
-        busName = n;
-        busSummary = s;
-        busIndustry = i;
-        busWebsite = w;
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-            busFounded = df.parse(f);
-        }catch (Exception ex) {
-            System.out.println(ex.getMessage());
+    protected void setLocations(int locID, String str, String c, String st, int z, float lat, float lon) {
+        BusLocations bl = new BusLocations();
+        bl.setLocation(locID, str, c, st, z, lat, lon);
+        busLocations.add(bl);
+    }
+    public void addBusLocation(String str, String c, String st, int z, float lat, float lon) {
+        int locID = DBconnection.getLocationID(busName, c, str, st, z, lat, lon);
+        boolean add=true;
+        for (BusLocations bl : busLocations)
+            if(bl.getLocationID()==locID) {
+                add=false;
+                break;
+            }
+        if(add) {
+            setLocations(locID, c, str, st, z, lat, lon);
         }
-        busLocations = l;
-        //DBconnection.updateBusiness(n,i,w,s,busFounded,l);
+    }
+    public void updateLocation(int locID, String str, String c, String st, int z, float lat, float lon) {
+        if(DBconnection.updateBusinessLocation(locID, str, c, st, z, lat, lon));
+        {
+            for (BusLocations bl : busLocations) {
+                if(bl.getLocationID()==locID)
+                    busLocations.remove(bl);
+            }
+            setLocations(locID,str,c,st,z,lat,lon);
+        }
     }
     public String getName() {
         return busName;
     }
     public String getIndustry() {
-        return busIndustry;
+        if(busIndustry!=null)
+            return busIndustry;
+        return "";
     }
-    public void setIndustry(String i) {
+    protected void setIndustry(String i) {
         busIndustry = i;
     }
     public String getWebsite() {
-        return busWebsite;
+        if(busWebsite!=null)
+            return busWebsite;
+        return "";
     }
-    public void setWebsite(String w) {
+    protected void setWebsite(String w) {
         busWebsite = w;
     }
     public String getSummary () {
-        return busSummary;
+        if(busSummary!=null)
+            return busSummary;
+        return "";
     }
-    public void setSummary(String s) {
+    protected void setSummary(String s) {
         busSummary = s;
     }
     public Date getFounded() {
-        return busFounded;
+        if(busFounded!=null)
+            return busFounded;
+        return new Date();
     }
-    public void setFounded(String s) {
+    protected void setFounded(String s) {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         try {
             busFounded = df.parse(s);
@@ -72,10 +90,10 @@ public class Business {
             System.out.println(ex.getMessage());
         }
     }
-    public void setFounded(Date d) {
+    protected void setFounded(Date d) {
         busFounded=d;
     }
-    public String[] getLocations() {
+    public ArrayList getLocations() {
         return busLocations;
     }
 }
