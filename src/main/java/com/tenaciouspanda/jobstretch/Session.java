@@ -8,7 +8,7 @@ package com.tenaciouspanda.jobstretch;
 import com.tenaciouspanda.jobstretch.database.DBconnection;
 import com.tenaciouspanda.jobstretch.database.User;
 import com.tenaciouspanda.jobstretch.database.StaticConnection;
-
+import java.util.ArrayList;
 /**
  *
  * @author Simon
@@ -32,18 +32,21 @@ public class Session {
     }
 
     public boolean register(
-            String user,
-            String pass,
-            String fname,
-            String lname,
-            String city,
-            String street,
-            String state,
-            int zip,
-            String occu,
-            String bus,
+            String user, 
+            String pass, 
+            String fname, 
+            String lname, 
+            String city, 
+            String street, 
+            String state, 
+            int zip, 
+            String occu, 
+            String bus, 
+            String sum, 
+            String startDate, 
+            String endDate, 
             boolean employed){
-        int result = DBconnection.createAccount(user, pass, fname, lname, city, street, state, zip, occu, bus, employed);
+        int result = DBconnection.createAccount(user, pass, fname, lname, city, street, state, zip, occu, bus, sum, startDate, endDate, employed);
         
         return (result == DBconnection.RESULT_OK);
     }
@@ -54,8 +57,8 @@ public class Session {
     }
     
     public User[] searchUsers(String fname, String lname){
-        return DBconnection.searchUser(fname, lname);
-    }
+         return DBconnection.searchUser(fname, lname);
+     }
 
     public void addConnection(User newUser) {
         DBconnection.addContact(currentUser.getUserID(), newUser.getUserID());
