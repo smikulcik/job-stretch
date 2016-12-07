@@ -90,7 +90,7 @@ public class DBconnection {
             int newUserID=0;
             String checkExistAccount = "SELECT userTable.userID FROM userTable "
                     + "JOIN employment ON userTable.userID=employment.userID "
-                    + "WHERE fname=? AND lname=? AND jobTitle=? AND businessInfoID=? AND username IS NULL";
+                    + "WHERE fname=? AND lname=? AND username IS NULL";
             pst = StaticConnection.conn.prepareStatement(checkExistAccount);
             pst.setString(1, fname);
             pst.setString(2, lname);

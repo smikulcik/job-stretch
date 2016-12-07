@@ -23,6 +23,35 @@ public class RegistrationPanel extends CardSubpanel {
         super(session, theView);
         initComponents();
     }
+    
+    @Override
+    public void onHide(){
+        clearForms();
+    }
+    
+    public void clearForms(){
+        usernameField.setText("");
+        passwordField.setText("");      
+        cityField.setText("");   
+        companyNameField.setText("");   
+        confirmPWField.setText("");   
+        employmentStatusComboBox.setSelectedIndex(0);
+        endDayComboBox.setSelectedIndex(0);
+        endMonthComboBox.setSelectedIndex(0);
+        endYearComboBox.setSelectedIndex(0);
+        firstNameField.setText("");   
+        lastNameField.setText("");   
+        occupationField.setText("");   
+        passwordField.setText("");   
+        startDayComboBox.setSelectedIndex(0);
+        startMonthComboBox.setSelectedIndex(0);
+        startYearComboBox.setSelectedIndex(0);
+        stateComboBox.setSelectedIndex(0);
+        streetAddressField.setText("");   
+        summaryTextArea.setText("");   
+        usernameField.setText("");   
+        zipCodeField.setText("");   
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,18 +294,15 @@ public class RegistrationPanel extends CardSubpanel {
                     .addComponent(employmentStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(employmentStatusLabel)
                     .addComponent(startLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(startMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(occupationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(occupationLabel))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(startMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(occupationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(occupationLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(companyNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,11 +326,9 @@ public class RegistrationPanel extends CardSubpanel {
                     .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(zipCodeLabel)
-                        .addGap(8, 8, 8))
-                    .addComponent(zipCodeField, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(zipCodeLabel)
+                    .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(registerButton)
                 .addContainerGap())
         );
@@ -333,10 +357,10 @@ public class RegistrationPanel extends CardSubpanel {
         if(session.register(usernameField.getText(), passwordField.getText(), 
                 firstNameField.getText(), lastNameField.getText(), cityField.getText(), 
                 streetAddressField.getText(), (String)stateComboBox.getSelectedItem(), zipCode, 
-                occupationField.getText(),summaryTextArea.getText(),
+                occupationField.getText(),
+                companyNameField.getText(), summaryTextArea.getText(),
                 startMonthComboBox.getSelectedItem()+"/"+startDayComboBox.getSelectedItem()+"/"+startYearComboBox.getSelectedItem(), 
-                endMonthComboBox.getSelectedItem()+"/"+endDayComboBox.getSelectedItem()+"/"+endYearComboBox.getSelectedItem(),
-                companyNameField.getText(), employed)){
+                endMonthComboBox.getSelectedItem()+"/"+endDayComboBox.getSelectedItem()+"/"+endYearComboBox.getSelectedItem(),employed)){
             view.displayView("LoginPanel");
             view.setStatus("Registered user.");
         }else{
