@@ -201,7 +201,7 @@ public class DashboardPanel extends CardSubpanel {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void addConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addConnectionButtonActionPerformed
-        this.view.displayView("AddConnectionPanel");
+        this.view.displayView("AddConnectionDeciderPanel");
     }//GEN-LAST:event_addConnectionButtonActionPerformed
 
     private void editUserProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserProfileButtonActionPerformed

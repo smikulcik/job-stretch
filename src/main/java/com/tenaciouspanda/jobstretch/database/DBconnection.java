@@ -335,13 +335,13 @@ public class DBconnection {
     
     /*Contacts*/
     //add connection that does not have an account. userID refers to the user who is logged, not contact's userID. Untested.
-    public static boolean addNonexistantContact(int userID, String user, String pass, 
+    public static boolean addNonexistantContact(int userID,
             String fname, String lname, String city, String street, String state, 
             int zip, String occu, String bus, Date start, Date end, boolean employed) {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            String addConnUT = "INSERT INTO userTable (firstName, lastName, employed) VALUES (?,?,?)";
+            String addConnUT = "INSERT INTO userTable (fname, lname, employed) VALUES (?,?,?)";
             pst = StaticConnection.conn.prepareStatement(addConnUT, PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, fname);
             pst.setString(2, lname);
@@ -365,7 +365,7 @@ public class DBconnection {
             pst.setInt(5, locationID);
             pst.execute();
                 
-            String addCon = "INSERT INTO connections VALUES (?,?), VALUES (?,?)";
+            String addCon = "INSERT INTO connections VALUES (?,?), (?,?)";
             pst = StaticConnection.conn.prepareStatement(addCon);
             pst.setInt(1, userID);
             pst.setInt(2, newKey);

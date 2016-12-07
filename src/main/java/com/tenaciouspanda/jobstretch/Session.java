@@ -8,7 +8,7 @@ package com.tenaciouspanda.jobstretch;
 import com.tenaciouspanda.jobstretch.database.DBconnection;
 import com.tenaciouspanda.jobstretch.database.User;
 import com.tenaciouspanda.jobstretch.database.StaticConnection;
-import java.util.ArrayList;
+import java.util.Date;
 /**
  *
  * @author Simon
@@ -21,7 +21,8 @@ public class Session {
     }
     public boolean authenticate(String username, String password){
         int returned = DBconnection.checkLoginCred(username, password);
-        if(returned!=DBconnection.RESULT_CONNECT_FAILED && returned != DBconnection.RESULT_EXIST) {
+        if(     returned != DBconnection.RESULT_CONNECT_FAILED &&
+                returned != DBconnection.RESULT_EXIST) {
             currentUser = new User(returned);
             currentUser.setContacts();
             return true;
@@ -47,7 +48,14 @@ public class Session {
             String startDate, 
             String endDate, 
             boolean employed){
-        int result = DBconnection.createAccount(user, pass, fname, lname, city, street, state, zip, occu, bus, sum, startDate, endDate, employed);
+        int result = DBconnection.createAccount(
+                user, pass,
+                fname, lname,
+                city, street, state, zip,
+                occu, bus,
+                sum,
+                startDate, endDate,
+                employed);
         
         return (result == DBconnection.RESULT_OK);
     }
@@ -61,14 +69,46 @@ public class Session {
          return DBconnection.searchUser(fname, lname);
      }
     public User[] searchConnectedUser(String queryString){
-        return DBconnection.searchConnectedUser(currentUser.getUserID(), queryString);
+        return DBconnection.searchConnectedUser(
+                currentUser.getUserID(), queryString);
     }
     public User[] searchUnconnectedUser(String fname, String lname){
-        return DBconnection.searchUnconnectedUser(currentUser.getUserID(), fname, lname);
+        return DBconnection.searchUnconnectedUser(
+                currentUser.getUserID(), fname, lname);
     }
 
     public void addConnection(User newUser) {
         DBconnection.addContact(currentUser.getUserID(), newUser.getUserID());
+    }
+    
+    /**
+     * 
+     * @param fname
+     * @param lname
+     * @param city
+     * @param street
+     * @param state
+     * @param zip
+     * @param occu
+     * @param bus
+     * @param start
+     * @param end
+     * @param employed 
+     */
+    public boolean addNewConnection(
+            String fname, String lname,
+            String city, String street, String state, int zip,
+            String occu,
+            String bus,
+            Date start, Date end,
+            boolean employed) {
+        return DBconnection.addNonexistantContact(currentUser.getUserID(),
+            fname, lname,
+            city, street, state, zip,
+            occu,
+            bus,
+            start, end,
+            employed);
     }
 
     public User getCurrentUser() {
