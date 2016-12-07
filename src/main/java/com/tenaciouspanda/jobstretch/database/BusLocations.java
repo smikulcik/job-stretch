@@ -7,7 +7,7 @@ package com.tenaciouspanda.jobstretch.database;
 public class BusLocations {
     private String street,city,state;
     private int locationID,zip;
-    private float lat,lon;
+    private LatLng latlng;
     
     public BusLocations() {
         
@@ -29,11 +29,14 @@ public class BusLocations {
     public int getZip() {
         return zip;
     }
+    public LatLng getLatLng(){
+        return latlng;
+    }
     public float getLat() {
-        return lat;
+        return latlng.getLat();
     }
     public float getLon() {
-        return lon;
+        return latlng.getLng();
     }
     
     protected void setLocation(int lID, String s, String c, String st, int z, float l, float lo) {
@@ -42,7 +45,8 @@ public class BusLocations {
         street = s;
         state = st;
         zip = z;
-        lat = l;
-        lon = lo;
+        latlng = new LatLng();
+        latlng.setLat(l);
+        latlng.setLng(lo);
     }
 }

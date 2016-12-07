@@ -21,6 +21,12 @@ public class AddConnectionPanel extends CardSubpanel {
         super(session, theView);
         initComponents();
     }
+    
+    @Override
+    public void onShow(){
+       User[] users = session.searchUnconnectedUser("", "");
+       jList1.setListData(users);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +114,11 @@ public class AddConnectionPanel extends CardSubpanel {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         User toAdd = jList1.getSelectedValue();
-        session.addConnection(toAdd);
+        if(toAdd != null){
+            session.addConnection(toAdd);
+            //update current user's contacts now that they've changed
+            session.getCurrentUser().setContacts();
+        }
         this.view.displayView("DashboardPanel");
     }//GEN-LAST:event_addBtnActionPerformed
 

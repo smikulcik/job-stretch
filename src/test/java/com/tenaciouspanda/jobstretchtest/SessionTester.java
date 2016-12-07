@@ -7,6 +7,7 @@
 package com.tenaciouspanda.jobstretchtest;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.User;
 
 /**
  *
@@ -15,6 +16,7 @@ import com.tenaciouspanda.jobstretch.Session;
 public class SessionTester {
     public void testAll(){
         testAuthentication();
+        testSearchUnconnectedUser();
     }
     public void testAuthentication(){
         Session s = new Session();
@@ -29,5 +31,14 @@ public class SessionTester {
         s.logout();
         if(s.isAuthenticated())
             throw new IllegalStateException("Session failed to logout");
+    }
+    public void testSearchUnconnectedUser(){
+        Session s = new Session();
+        s.authenticate("test", "test");
+        User[] users = s.searchUnconnectedUser("","");
+        System.out.println("UNCONNECTED USERS");
+        for(User u : users){
+            System.out.println(u);
+        }
     }
 }

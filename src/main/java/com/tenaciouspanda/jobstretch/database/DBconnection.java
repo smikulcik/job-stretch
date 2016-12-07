@@ -3,7 +3,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
-import java.util.ArrayList;
 
 public class DBconnection {
     final static public int RESULT_OK = 0;
@@ -228,7 +227,8 @@ public class DBconnection {
                 currentUser.setStreet(rs.getString(5));
                 currentUser.setState(rs.getString(6));
                 currentUser.setZip(rs.getInt(7));
-                currentUser.setBusiness(rs.getString(8));    
+                currentUser.setBusiness(rs.getString(8)); 
+                currentUser.updateCoordinates();
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -308,6 +308,7 @@ public class DBconnection {
                 connectionIDs[pos] = rs.getInt(1);
                 pos++;
             }
+            currentUser.clearContacts();
             for (int cID : connectionIDs) {
                 User contact = new User(cID);
                 setUser(contact,cID);
@@ -456,6 +457,50 @@ public class DBconnection {
             pst = StaticConnection.conn.prepareStatement(search);
             pst.setString(1, "%" + fname + "%");
             pst.setString(2, "%" + lname + "%");
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.last();
+            int max = rs.getRow();
+            results = new User[max];
+            rs.beforeFirst();
+            for (int a=0;a<max;a++) {
+                rs.next();
+                results[a] = new User(rs.getInt(1));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if(rs!=null) {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {}
+            }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
+        }
+        return results;
+    }
+    
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static User[] searchUnconnectedUser (int userID, String fname, String lname) {
+        if(!StaticConnection.checkConnection())
+            StaticConnection.initializeConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        User[] results = null;
+        try {
+            String search = "SELECT userID from userTable " +
+                    "WHERE fname LIKE ? AND lname LIKE ? AND userID not in (select userConnection from connections where userID=?)";
+            pst = StaticConnection.conn.prepareStatement(search);
+            pst.setString(1, "%" + fname + "%");
+            pst.setString(2, "%" + lname + "%");
+            pst.setInt(3, userID);
             pst.execute();
             rs = pst.getResultSet();
             rs.last();

@@ -7,7 +7,9 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.LatLng;
 import com.tenaciouspanda.jobstretch.database.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,8 +27,20 @@ public class DashboardPanel extends CardSubpanel {
         initComponents();
     }
     
+    @Override
     public void onShow(){
-        
+        ArrayList<User> users = session.getCurrentUser().getContacts();
+        User[] userArray = new User[users.size()];
+        userArray = users.toArray(userArray);
+        connectionList.setListData(userArray);
+
+        mapsPanel.clear();
+        for(User u: userArray){
+            mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
+        }
+    }
+    
+    public void updateMap(Iterable<LatLng> coords){
     }
 
     /**
@@ -41,7 +55,7 @@ public class DashboardPanel extends CardSubpanel {
         logoutButton = new javax.swing.JButton();
         searchTextField = new javax.swing.JTextField();
         refreshButton = new javax.swing.JButton();
-        mapsPanel1 = new com.tenaciouspanda.jobstretch.MapsPanel();
+        mapsPanel = new com.tenaciouspanda.jobstretch.MapsPanel();
         viewConnectionDetailsButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         connectionList = new javax.swing.JList<>();
@@ -118,7 +132,7 @@ public class DashboardPanel extends CardSubpanel {
                         .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(refreshButton))
-                    .addComponent(mapsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -133,7 +147,7 @@ public class DashboardPanel extends CardSubpanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                    .addComponent(mapsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -169,7 +183,7 @@ public class DashboardPanel extends CardSubpanel {
     private javax.swing.JButton editUserProfileButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
-    private com.tenaciouspanda.jobstretch.MapsPanel mapsPanel1;
+    private com.tenaciouspanda.jobstretch.MapsPanel mapsPanel;
     private javax.swing.JButton refreshButton;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JButton viewConnectionDetailsButton;

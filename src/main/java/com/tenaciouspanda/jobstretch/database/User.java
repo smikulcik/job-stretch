@@ -1,4 +1,6 @@
 package com.tenaciouspanda.jobstretch.database;
+import com.google.maps.model.GeocodingResult;
+import com.tenaciouspanda.jobstretch.Geocoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,12 +13,12 @@ public class User {
     private String userName,fname,lname,street,city,state,business,jobTitle,summary;
     private Date startDate,endDate;
     private boolean employed;
-    private float lat,lon;
+    private LatLng latlng;
     public User(int uID) {
         userID=uID;
         zip=0;
         employed=false;
-        lat=0;lon=0;
+        latlng = new LatLng();
         DBconnection.setUser(this, userID);
     }
     /**
@@ -350,29 +352,38 @@ public class User {
      * @return 
      */
     public float getLat() {
-        return lat;
+        return latlng.getLat();
     }
     /**
      * Set's latitude location for user, should only be used by DBconnection.
      * @param l 
      */
     protected void setLat(float l) {
-        lat = l;
+        latlng.setLat(l);
     }
     /**
      * Returns the longitude location of where the user works. For the Google Map.
      * @return 
      */
     public float getLon() {
-        return lon;
+        return latlng.getLng();
     }
     /**
      * Set's longitude location for user, should only be used by DBconnection.
      * @param l 
      */
     protected void setLon(float l) {
-        lon = l;
+        latlng.setLng(l);
     }
+    
+    /**
+     * Gets the User's LatLng
+     * @return the user's LatLng
+     */
+    public LatLng getLatLng(){
+        return latlng;
+    }
+    
     /**
      * Returns an array list that holds the value for all the user's contacts.
      * @return 
@@ -384,5 +395,16 @@ public class User {
     @Override
     public String toString(){
         return String.format("%s %s %s %s", userID, fname, lname, jobTitle);
+    }
+
+    public void clearContacts() {
+        connections = new ArrayList();
+    }
+
+    void updateCoordinates() {
+        Geocoder g = new Geocoder();
+        GeocodingResult r = g.geocode(business + " " + street + " " + city + ", " + state + " " + zip);
+        latlng.setLat((float)r.geometry.location.lat);
+        latlng.setLng((float)r.geometry.location.lng);
     }
 }

@@ -22,7 +22,7 @@ public class Session {
         int returned = DBconnection.checkLoginCred(username, password);
         if(returned!=DBconnection.RESULT_CONNECT_FAILED && returned != DBconnection.RESULT_EXIST) {
             currentUser = new User(returned);
-            DBconnection.setContacts(currentUser);
+            currentUser.setContacts();
             return true;
         }
         return false;
@@ -59,8 +59,15 @@ public class Session {
     public User[] searchUsers(String fname, String lname){
          return DBconnection.searchUser(fname, lname);
      }
+    public User[] searchUnconnectedUser(String fname, String lname){
+        return DBconnection.searchUnconnectedUser(currentUser.getUserID(), fname, lname);
+    }
 
     public void addConnection(User newUser) {
         DBconnection.addContact(currentUser.getUserID(), newUser.getUserID());
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 }
