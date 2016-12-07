@@ -30,6 +30,7 @@ public class CompanyDetailPanel extends CardSubpanel {
     public void onShow(){
         if(session.getSelected() instanceof Business){
             Business b = (Business)session.getSelected();
+            b.update();
             businessNameLbl.setText(b.getName());
             industryLbl.setText(b.getIndustry());
             foundedLbl.setText(b.getFounded().toString());
@@ -68,6 +69,7 @@ public class CompanyDetailPanel extends CardSubpanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         locationsListBox = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
+        addLocationBtn = new javax.swing.JButton();
         businessNameLbl = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -111,30 +113,42 @@ public class CompanyDetailPanel extends CardSubpanel {
 
         jLabel2.setText("Locations");
 
+        addLocationBtn.setText("Add Location");
+        addLocationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addLocationBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(industryLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(industryLbl))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(foundedLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(foundedLbl))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(websiteLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(websiteLbl)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(industryLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(industryLbl))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(foundedLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(foundedLbl))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(websiteLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(websiteLbl)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addLocationBtn)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -156,11 +170,13 @@ public class CompanyDetailPanel extends CardSubpanel {
                 .addComponent(jLabel2)
                 .addGap(3, 3, 3)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addLocationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         businessNameLbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        businessNameLbl.setText("Company Profile");
+        businessNameLbl.setText("CompanyName");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -193,7 +209,7 @@ public class CompanyDetailPanel extends CardSubpanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(businessNameLbl)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -220,8 +236,13 @@ public class CompanyDetailPanel extends CardSubpanel {
         this.view.displayView("DashboardPanel");
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void addLocationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLocationBtnActionPerformed
+        this.view.displayView("AddCompanyLocationPanel");
+    }//GEN-LAST:event_addLocationBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addLocationBtn;
     private javax.swing.JButton backButton;
     private javax.swing.JLabel businessNameLbl;
     private javax.swing.JLabel dataLabel;

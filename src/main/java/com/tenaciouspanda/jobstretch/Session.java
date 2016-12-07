@@ -131,4 +131,8 @@ public class Session {
     public int addNewBusiness(String bn, String i, Date f, String w, String s) {
         return DBconnection.addNewBusiness(bn, i, f, w, s);
     }
+
+    public boolean addCompanyLocation(String businessName, String street, String city, String state,  int zip) {
+        return DBconnection.addBusinessLocation(businessName, street, city, state, zip);
+    }
 }

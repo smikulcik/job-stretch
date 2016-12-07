@@ -4,6 +4,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBconnection {
     final static public int RESULT_OK = 0;
@@ -94,8 +96,6 @@ public class DBconnection {
             pst = StaticConnection.conn.prepareStatement(checkExistAccount);
             pst.setString(1, fname);
             pst.setString(2, lname);
-            pst.setString(3, occu);
-            pst.setInt(4, locationID);
             pst.execute();
             rs = pst.getResultSet();
             if(rs != null && rs.next()) {
@@ -652,6 +652,7 @@ public class DBconnection {
             pst.setString(1, currentBus.getName());
             pst.execute();
             rs = pst.getResultSet();
+            currentBus.getLocations().clear();
             while(rs.next()) {
                 currentBus.setLocations(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getFloat(6),rs.getFloat(7));
             }
@@ -832,6 +833,30 @@ public class DBconnection {
         }
         return success;
     }
+    
+    public static boolean addBusinessLocation(String busName, String street, String city, String state, int zip){
+        String addBus = "INSERT INTO businessLocations (businessName, city, street, state, zip,lat,lon) VALUES (?,?,?,?,?,?,?)";
+        PreparedStatement pst;
+        ResultSet rs;
+        
+        LatLng coord = (new Geocoder()).geocode(street + " " + city + " " + state + " " + zip);
+        try {
+            pst = StaticConnection.conn.prepareStatement(addBus);
+            pst.setString(1, busName);
+            pst.setString(2, city);
+            pst.setString(3, street);
+            pst.setString(4, state);
+            pst.setInt(5, zip);
+            pst.setFloat(6, coord.getLat());
+            pst.setFloat(7, coord.getLng());
+            pst.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Updates location changes into the database.
      * @param locID

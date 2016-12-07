@@ -38,6 +38,7 @@ public class ViewManager extends JFrame {
         AddNewConnectionPanel ancp = new AddNewConnectionPanel(session, this);
         AddConnectionDeciderPanel acdp = new AddConnectionDeciderPanel(session, this);
         AddCompanyPanel acpp = new AddCompanyPanel(session, this);
+        AddCompanyLocationPanel aclp = new AddCompanyLocationPanel(session, this);
         
         cardLookup.put("DashboardPanel", dashboard);
         cardLookup.put("LoginPanel", login);
@@ -50,6 +51,7 @@ public class ViewManager extends JFrame {
         cardLookup.put("AddNewConnectionPanel", ancp);
         cardLookup.put("AddConnectionDeciderPanel", acdp);
         cardLookup.put("AddCompanyPanel", acpp);
+        cardLookup.put("AddCompanyLocationPanel", aclp);
         
         for(String key : cardLookup.keySet())
             cardPanel.add(cardLookup.get(key), key);
