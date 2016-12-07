@@ -12,16 +12,13 @@ import com.tenaciouspanda.jobstretch.database.User;
  *
  * @author ekustudent
  */
-public class AddConnectionPanel extends javax.swing.JPanel {
+public class AddConnectionPanel extends CardSubpanel {
 
-    Session session;
-    ViewManager view;
     /**
      * Creates new form AddConnection
      */
     public AddConnectionPanel(Session session, ViewManager theView) {
-        this.session = session;
-        this.view = theView;
+        super(session, theView);
         initComponents();
     }
 
@@ -103,22 +100,22 @@ public class AddConnectionPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addBtn)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         User toAdd = jList1.getSelectedValue();
         session.addConnection(toAdd);
-        this.view.displayView("Dashboard");
+        this.view.displayView("DashboardPanel");
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
        String fname = fnameSearch.getText();
        String lname = lnameSearch.getText();
-       User[] users = session.searchUsers(fname, lname);
+       User[] users = session.searchUnconnectedUser(fname, lname);
        jList1.setListData(users);
     }//GEN-LAST:event_searchBtnActionPerformed
 

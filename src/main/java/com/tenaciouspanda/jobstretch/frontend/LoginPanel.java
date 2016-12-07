@@ -12,10 +12,7 @@ import com.tenaciouspanda.jobstretch.Session;
  *
  * @author Simon
  */
-public class LoginPanel extends javax.swing.JPanel {
-    
-    Session session;
-    ViewManager view;
+public class LoginPanel extends CardSubpanel {
 
     /**
      * Creates new form LoginPanel
@@ -23,8 +20,7 @@ public class LoginPanel extends javax.swing.JPanel {
      * @param theView
      */
     public LoginPanel(Session session, ViewManager theView) {
-        this.session = session;
-        this.view = theView;
+        super(session, theView);
         initComponents();
     }
 

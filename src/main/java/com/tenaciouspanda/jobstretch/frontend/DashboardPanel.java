@@ -7,25 +7,26 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.User;
 
 /**
  *
  * @author ekustudent
  */
-public class DashboardPanel extends javax.swing.JPanel {
+public class DashboardPanel extends CardSubpanel {
     
-    Session session;
-    ViewManager view;
-
     /**
      * Creates new form DashboardPanel
      * @param session
      * @param theView
      */
     public DashboardPanel(Session session, ViewManager theView) {
-        this.session = session;
-        this.view = theView;
+        super(session, theView);
         initComponents();
+    }
+    
+    public void onShow(){
+        
     }
 
     /**
@@ -43,7 +44,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         mapsPanel1 = new com.tenaciouspanda.jobstretch.MapsPanel();
         viewConnectionDetailsButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        connectionList = new javax.swing.JList<String>();
+        connectionList = new javax.swing.JList<>();
         addConnectionButton = new javax.swing.JButton();
         editUserProfileButton = new javax.swing.JButton();
         addCompanyButton = new javax.swing.JButton();
@@ -64,11 +65,6 @@ public class DashboardPanel extends javax.swing.JPanel {
         viewConnectionDetailsButton.setText("View Connection Details");
 
         connectionList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        connectionList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(connectionList);
 
         addConnectionButton.setText("Add Connection");
@@ -122,7 +118,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                         .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(refreshButton))
-                    .addComponent(mapsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(mapsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -137,7 +133,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                    .addComponent(mapsPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(mapsPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -169,7 +165,7 @@ public class DashboardPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCompanyButton;
     private javax.swing.JButton addConnectionButton;
-    private javax.swing.JList<String> connectionList;
+    private javax.swing.JList<User> connectionList;
     private javax.swing.JButton editUserProfileButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;

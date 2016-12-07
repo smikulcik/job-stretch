@@ -12,19 +12,15 @@ import com.tenaciouspanda.jobstretch.Session;
  *
  * @author Simon
  */
-public class CompanyDetailPanel extends javax.swing.JPanel {
+public class CompanyDetailPanel extends CardSubpanel {
     
-    Session session;
-    ViewManager view;
-
     /**
      * Creates new form CompanyDetailForm
      * @param session
      * @param theView
      */
     public CompanyDetailPanel(Session session, ViewManager theView) {
-        this.session = session;
-        this.view = theView;
+        super(session, theView);
         initComponents();
     }
 

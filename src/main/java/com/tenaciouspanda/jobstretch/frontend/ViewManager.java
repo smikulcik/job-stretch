@@ -7,12 +7,15 @@ package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
 import java.awt.CardLayout;
+import java.util.HashMap;
 import javax.swing.JFrame;
 
 
 public class ViewManager extends JFrame {
 
     private Session session;
+    HashMap<String, CardSubpanel> cardLookup = new HashMap();
+    
     /**
      * Creates new form ViewManager
      */
@@ -33,23 +36,32 @@ public class ViewManager extends JFrame {
         UserProfilePanel upp = new UserProfilePanel(session, this);
         AddConnectionPanel acp = new AddConnectionPanel(session, this);
         
-        cardPanel.add(dashboard, "DashboardPanel");
-        cardPanel.add(login, "LoginPanel");
-        cardPanel.add(cd, "CompanyDetailPanel");
-        cardPanel.add(cp, "CompanyProfilePanel");
-        cardPanel.add(pd, "PersonDetailPanel");
-        cardPanel.add(rp, "RegistrationPanel");
-        cardPanel.add(ufp, "UserFoundPanel");
-        cardPanel.add(upp, "UserProfilePanel");
-        cardPanel.add(acp, "AddConnectionPanel");
+        cardLookup.put("DashboardPanel", dashboard);
+        cardLookup.put("LoginPanel", login);
+        cardLookup.put("CompanyDetailPanel", cd);
+        cardLookup.put("CompanyProfilePanel", cp);
+        cardLookup.put("PersonDetailPanel", pd);
+        cardLookup.put("RegistrationPanel", rp);
+        cardLookup.put("UserFoundPanel", ufp);
+        cardLookup.put("UserProfilePanel", upp);
+        cardLookup.put("AddConnectionPanel", acp);
+        
+        for(String key : cardLookup.keySet())
+            cardPanel.add(cardLookup.get(key), key);
+        
         add(cardPanel);
         displayView("LoginPanel");
         setStatus("Initialized");
     }
     void displayView(String viewTitle){
-        ((CardLayout)cardPanel.getLayout()).show(cardPanel, viewTitle);
+        CardLayout layout = (CardLayout)cardPanel.getLayout();
+        CardSubpanel csp = cardLookup.get(viewTitle);
+        
+        layout.show(cardPanel, viewTitle);
         setVisible(true);
         pack();
+        
+        csp.onShow();
     }
     
     void setStatus(String status){
