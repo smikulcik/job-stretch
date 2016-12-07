@@ -221,7 +221,7 @@ public class DashboardPanel extends CardSubpanel {
     }//GEN-LAST:event_editUserProfileButtonActionPerformed
 
     private void addCompanyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCompanyButtonActionPerformed
-        this.view.displayView("CompanyProfilePanel");
+        this.view.displayView("AddCompanyPanel");
     }//GEN-LAST:event_addCompanyButtonActionPerformed
 
     private void companyMapRDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyMapRDBActionPerformed

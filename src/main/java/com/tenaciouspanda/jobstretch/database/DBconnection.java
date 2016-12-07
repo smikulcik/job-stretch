@@ -781,11 +781,11 @@ public class DBconnection {
     }
     /**
      * Adds a new business into the database.
-     * @param bn
-     * @param i
-     * @param f
-     * @param w
-     * @param s
+     * @param bn business name
+     * @param i industry
+     * @param f founded date
+     * @param w website
+     * @param s summary
      * @return 
      */
     public static int addNewBusiness(String bn, String i, Date f, String w, String s) {

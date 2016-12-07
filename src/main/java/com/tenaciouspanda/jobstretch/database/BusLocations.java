@@ -49,4 +49,9 @@ public class BusLocations {
         latlng.setLat(l);
         latlng.setLng(lo);
     }
+    
+    @Override
+    public String toString(){
+        return street + ", " + city + ", " + state + " " + zip;
+    }
 }

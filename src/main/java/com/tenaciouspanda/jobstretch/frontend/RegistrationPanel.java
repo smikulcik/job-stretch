@@ -13,6 +13,12 @@ import com.tenaciouspanda.jobstretch.Session;
  * @author Simon
  */
 public class RegistrationPanel extends CardSubpanel {
+    final private String[] years = new String[220];
+    {
+        for(int i=0; i < 220; i++){
+            years[i] = "" + (2016 - i);
+        }
+    }
 
     /**
      * Creates new form RegistrationPanel
@@ -22,6 +28,8 @@ public class RegistrationPanel extends CardSubpanel {
     public RegistrationPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(years));
+        endYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(years));
     }
     
     @Override
@@ -166,6 +174,11 @@ public class RegistrationPanel extends CardSubpanel {
         startDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
         startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016" }));
+        startYearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startYearComboBoxActionPerformed(evt);
+            }
+        });
 
         endDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
@@ -414,6 +427,10 @@ public class RegistrationPanel extends CardSubpanel {
                 endDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         }
     }//GEN-LAST:event_endMonthComboBoxActionPerformed
+
+    private void startYearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startYearComboBoxActionPerformed
+
+    }//GEN-LAST:event_startYearComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

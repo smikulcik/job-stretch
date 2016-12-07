@@ -127,4 +127,8 @@ public class Session {
     public Business[] searchBusinesses(String query) {
         return DBconnection.searchBusinesses(query);
     }
+    
+    public int addNewBusiness(String bn, String i, Date f, String w, String s) {
+        return DBconnection.addNewBusiness(bn, i, f, w, s);
+    }
 }

@@ -7,6 +7,7 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.BusLocations;
 import com.tenaciouspanda.jobstretch.database.Business;
 
 /**
@@ -28,6 +29,16 @@ public class CompanyDetailPanel extends CardSubpanel {
     @Override
     public void onShow(){
         if(session.getSelected() instanceof Business){
+            Business b = (Business)session.getSelected();
+            businessNameLbl.setText(b.getName());
+            industryLbl.setText(b.getIndustry());
+            foundedLbl.setText(b.getFounded().toString());
+            websiteLbl.setText(b.getWebsite());
+            summaryTextBox.setText(b.getSummary());
+            
+            BusLocations[] locs = new BusLocations[b.getLocations().size()];
+            b.getLocations().toArray(locs);
+            locationsListBox.setListData(locs);
             
         }
     }
@@ -46,24 +57,23 @@ public class CompanyDetailPanel extends CardSubpanel {
         addEmployeeButton = new javax.swing.JButton();
         summaryLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        summaryTextBox = new javax.swing.JTextArea();
         editButton = new javax.swing.JButton();
         saveButton1 = new javax.swing.JButton();
         dataLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         industryLabel = new javax.swing.JLabel();
         foundedLabel = new javax.swing.JLabel();
-        locationLabel = new javax.swing.JLabel();
-        industryComboBox = new javax.swing.JComboBox<>();
-        dateInput = new javax.swing.JTextField();
-        addressInput = new javax.swing.JTextField();
-        cityField = new javax.swing.JTextField();
-        stateComboBox = new javax.swing.JComboBox<>();
-        zipCodeInput = new javax.swing.JTextField();
         websiteLabel = new javax.swing.JLabel();
-        websiteField = new javax.swing.JTextField();
+        industryLbl = new javax.swing.JLabel();
+        foundedLbl = new javax.swing.JLabel();
+        websiteLbl = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        locationsListBox = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
         editButton1 = new javax.swing.JButton();
         saveButton2 = new javax.swing.JButton();
+        businessNameLbl = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Company Profile");
@@ -85,9 +95,12 @@ public class CompanyDetailPanel extends CardSubpanel {
         summaryLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         summaryLabel.setText("Summary");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        summaryTextBox.setEditable(false);
+        summaryTextBox.setBackground(new java.awt.Color(240, 240, 240));
+        summaryTextBox.setColumns(20);
+        summaryTextBox.setRows(5);
+        summaryTextBox.setBorder(null);
+        jScrollPane1.setViewportView(summaryTextBox);
 
         editButton.setText("Edit");
         editButton.addActionListener(new java.awt.event.ActionListener() {
@@ -112,23 +125,17 @@ public class CompanyDetailPanel extends CardSubpanel {
 
         foundedLabel.setText("Founded");
 
-        locationLabel.setText("Location");
-
-        industryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Automotive", "Finance" }));
-
-        dateInput.setText("00/00/0000");
-
-        addressInput.setText("Street Address");
-
-        cityField.setText("City");
-
-        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KY", "AR" }));
-
-        zipCodeInput.setText("Zip Code");
-
         websiteLabel.setText("Website");
 
-        websiteField.setText("www.example.com");
+        industryLbl.setText("jLabel2");
+
+        foundedLbl.setText("jLabel2");
+
+        websiteLbl.setText("jLabel2");
+
+        jScrollPane2.setViewportView(locationsListBox);
+
+        jLabel2.setText("Locations");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -137,52 +144,44 @@ public class CompanyDetailPanel extends CardSubpanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(industryLabel)
-                    .addComponent(foundedLabel)
-                    .addComponent(locationLabel)
-                    .addComponent(websiteLabel))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addressInput)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(zipCodeInput, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(industryComboBox, 0, 225, Short.MAX_VALUE)
-                            .addComponent(dateInput))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(websiteField))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(industryLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(industryLbl))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(foundedLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(foundedLbl))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(websiteLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(websiteLbl)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(industryLabel)
-                            .addComponent(industryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(foundedLabel))
-                    .addComponent(dateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(industryLabel)
+                    .addComponent(industryLbl))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(locationLabel)
-                    .addComponent(addressInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(zipCodeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(foundedLabel)
+                    .addComponent(foundedLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(websiteLabel)
-                    .addComponent(websiteField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(websiteLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(3, 3, 3)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -200,43 +199,48 @@ public class CompanyDetailPanel extends CardSubpanel {
             }
         });
 
+        businessNameLbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        businessNameLbl.setText("Company Profile");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(191, 191, 191)
-                        .addComponent(addEmployeeButton))
+                        .addGap(118, 118, 118)
+                        .addComponent(jLabel1))
+                    .addComponent(saveButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(128, 128, 128)
+                            .addComponent(summaryLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(saveButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(128, 128, 128)
-                                    .addComponent(summaryLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(61, 61, 61)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(dataLabel)
-                                        .addGap(143, 143, 143)
-                                        .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(saveButton2, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                                .addComponent(dataLabel)
+                                .addGap(143, 143, 143)
+                                .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(saveButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(businessNameLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addEmployeeButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -244,10 +248,11 @@ public class CompanyDetailPanel extends CardSubpanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addEmployeeButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addEmployeeButton)
-                        .addComponent(jLabel1))
-                    .addComponent(backButton))
+                        .addComponent(backButton)
+                        .addComponent(jLabel1)
+                        .addComponent(businessNameLbl)))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(summaryLabel)
@@ -293,27 +298,26 @@ public class CompanyDetailPanel extends CardSubpanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEmployeeButton;
-    private javax.swing.JTextField addressInput;
     private javax.swing.JButton backButton;
-    private javax.swing.JTextField cityField;
+    private javax.swing.JLabel businessNameLbl;
     private javax.swing.JLabel dataLabel;
-    private javax.swing.JTextField dateInput;
     private javax.swing.JButton editButton;
     private javax.swing.JButton editButton1;
     private javax.swing.JLabel foundedLabel;
-    private javax.swing.JComboBox<String> industryComboBox;
+    private javax.swing.JLabel foundedLbl;
     private javax.swing.JLabel industryLabel;
+    private javax.swing.JLabel industryLbl;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel locationLabel;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<BusLocations> locationsListBox;
     private javax.swing.JButton saveButton1;
     private javax.swing.JButton saveButton2;
-    private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel summaryLabel;
-    private javax.swing.JTextField websiteField;
+    private javax.swing.JTextArea summaryTextBox;
     private javax.swing.JLabel websiteLabel;
-    private javax.swing.JTextField zipCodeInput;
+    private javax.swing.JLabel websiteLbl;
     // End of variables declaration//GEN-END:variables
 }

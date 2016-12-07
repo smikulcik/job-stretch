@@ -30,7 +30,6 @@ public class ViewManager extends JFrame {
         DashboardPanel dashboard = new DashboardPanel(session, this);
         LoginPanel login = new LoginPanel(session, this);
         CompanyDetailPanel cd = new CompanyDetailPanel(session, this);
-        CompanyProfilePanel cp = new CompanyProfilePanel(session, this);
         PersonDetailPanel pd = new PersonDetailPanel(session, this);
         RegistrationPanel rp = new RegistrationPanel(session, this);
         UserFoundPanel ufp = new UserFoundPanel(session, this);
@@ -38,11 +37,11 @@ public class ViewManager extends JFrame {
         AddConnectionPanel acp = new AddConnectionPanel(session, this);
         AddNewConnectionPanel ancp = new AddNewConnectionPanel(session, this);
         AddConnectionDeciderPanel acdp = new AddConnectionDeciderPanel(session, this);
+        AddCompanyPanel acpp = new AddCompanyPanel(session, this);
         
         cardLookup.put("DashboardPanel", dashboard);
         cardLookup.put("LoginPanel", login);
         cardLookup.put("CompanyDetailPanel", cd);
-        cardLookup.put("CompanyProfilePanel", cp);
         cardLookup.put("PersonDetailPanel", pd);
         cardLookup.put("RegistrationPanel", rp);
         cardLookup.put("UserFoundPanel", ufp);
@@ -50,6 +49,7 @@ public class ViewManager extends JFrame {
         cardLookup.put("AddConnectionPanel", acp);
         cardLookup.put("AddNewConnectionPanel", ancp);
         cardLookup.put("AddConnectionDeciderPanel", acdp);
+        cardLookup.put("AddCompanyPanel", acpp);
         
         for(String key : cardLookup.keySet())
             cardPanel.add(cardLookup.get(key), key);
