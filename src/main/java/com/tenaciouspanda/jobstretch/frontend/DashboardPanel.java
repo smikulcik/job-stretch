@@ -58,6 +58,16 @@ public class DashboardPanel extends CardSubpanel {
         view.setStatus("Found " + businesses.length + " businesses");
     }
     
+    public void viewSelectedDetails(){
+        Object o = connectionList.getSelectedValue();
+        session.select(o);
+        if(o instanceof User){
+            view.displayView("PersonDetailPanel");
+        }else if(o instanceof Business){
+            view.displayView("CompanyDetailPanel");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,7 +109,12 @@ public class DashboardPanel extends CardSubpanel {
             }
         });
 
-        viewConnectionDetailsButton.setText("View Connection Details");
+        viewConnectionDetailsButton.setText("View Details of Selected");
+        viewConnectionDetailsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewConnectionDetailsButtonActionPerformed(evt);
+            }
+        });
 
         connectionList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         connectionList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,15 +259,13 @@ public class DashboardPanel extends CardSubpanel {
 
     private void connectionListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectionListMouseClicked
         if (evt.getClickCount() == 2) {
-            Object o = connectionList.getSelectedValue();
-            session.select(o);
-            if(o instanceof User){
-                view.displayView("PersonDetailPanel");
-            }else if(o instanceof Business){
-                view.displayView("CompanyDetailPanel");
-            }
+            viewSelectedDetails();
         }
     }//GEN-LAST:event_connectionListMouseClicked
+
+    private void viewConnectionDetailsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewConnectionDetailsButtonActionPerformed
+        viewSelectedDetails();
+    }//GEN-LAST:event_viewConnectionDetailsButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCompanyButton;
