@@ -450,7 +450,7 @@ public class DBconnection {
             StaticConnection.initializeConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
-        User[] results = null;
+        User[] results = {};
         try {
             String search = "SELECT userID from userTable " +
                     "WHERE fname LIKE ? AND lname LIKE ?";
@@ -493,7 +493,7 @@ public class DBconnection {
             StaticConnection.initializeConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
-        User[] results = null;
+        User[] results = {};
         try {
             String search = "SELECT userID from userTable " +
                     "WHERE fname LIKE ? AND lname LIKE ? AND userID not in (select userConnection from connections where userID=?)";
@@ -501,6 +501,50 @@ public class DBconnection {
             pst.setString(1, "%" + fname + "%");
             pst.setString(2, "%" + lname + "%");
             pst.setInt(3, userID);
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.last();
+            int max = rs.getRow();
+            results = new User[max];
+            rs.beforeFirst();
+            for (int a=0;a<max;a++) {
+                rs.next();
+                results[a] = new User(rs.getInt(1));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if(rs!=null) {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {}
+            }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
+        }
+        return results;
+    }
+    
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static User[] searchConnectedUser (int userID, String query) {
+        if(!StaticConnection.checkConnection())
+            StaticConnection.initializeConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        User[] results = {};
+        try {
+            String search = "SELECT userID, fname, lname from userTable " +
+                    "WHERE userID in (select userConnection from connections where userID=?)" +
+                    "HAVING concat(fname, ' ', lname) LIKE ? ";
+            pst = StaticConnection.conn.prepareStatement(search);
+            pst.setInt(1, userID);
+            pst.setString(2, "%" + query + "%");
             pst.execute();
             rs = pst.getResultSet();
             rs.last();

@@ -7,7 +7,6 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
-import com.tenaciouspanda.jobstretch.database.LatLng;
 import com.tenaciouspanda.jobstretch.database.User;
 import java.util.ArrayList;
 
@@ -32,15 +31,17 @@ public class DashboardPanel extends CardSubpanel {
         ArrayList<User> users = session.getCurrentUser().getContacts();
         User[] userArray = new User[users.size()];
         userArray = users.toArray(userArray);
-        connectionList.setListData(userArray);
-
-        mapsPanel.clear();
-        for(User u: userArray){
-            mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
-        }
+        showConnections(userArray);
     }
     
-    public void updateMap(Iterable<LatLng> coords){
+    public void showConnections(User[] users){
+        connectionList.setListData(users);
+        
+        mapsPanel.clear();
+        for(User u: users){
+            mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
+        }
+        view.setStatus("Found " + users.length + " connections");
     }
 
     /**
@@ -52,6 +53,7 @@ public class DashboardPanel extends CardSubpanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mapTypeRDBGroup = new javax.swing.ButtonGroup();
         logoutButton = new javax.swing.JButton();
         searchTextField = new javax.swing.JTextField();
         refreshButton = new javax.swing.JButton();
@@ -62,6 +64,8 @@ public class DashboardPanel extends CardSubpanel {
         addConnectionButton = new javax.swing.JButton();
         editUserProfileButton = new javax.swing.JButton();
         addCompanyButton = new javax.swing.JButton();
+        connectionMapRDB = new javax.swing.JRadioButton();
+        companyMapRDB = new javax.swing.JRadioButton();
 
         setPreferredSize(new java.awt.Dimension(820, 490));
 
@@ -75,6 +79,11 @@ public class DashboardPanel extends CardSubpanel {
         searchTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
 
         viewConnectionDetailsButton.setText("View Connection Details");
 
@@ -102,6 +111,23 @@ public class DashboardPanel extends CardSubpanel {
             }
         });
 
+        mapTypeRDBGroup.add(connectionMapRDB);
+        connectionMapRDB.setSelected(true);
+        connectionMapRDB.setText("Connection Map");
+        connectionMapRDB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectionMapRDBActionPerformed(evt);
+            }
+        });
+
+        mapTypeRDBGroup.add(companyMapRDB);
+        companyMapRDB.setText("Company Map");
+        companyMapRDB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                companyMapRDBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,40 +136,45 @@ public class DashboardPanel extends CardSubpanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(addConnectionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addConnectionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                            .addComponent(addCompanyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(logoutButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editUserProfileButton)
-                        .addGap(0, 95, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(addCompanyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(connectionMapRDB)
+                            .addComponent(companyMapRDB))
                         .addGap(18, 18, 18)
-                        .addComponent(refreshButton))
-                    .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(searchTextField)
+                        .addGap(18, 18, 18)
+                        .addComponent(refreshButton)))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(refreshButton)
-                    .addComponent(logoutButton)
-                    .addComponent(editUserProfileButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(refreshButton)
+                        .addComponent(logoutButton)
+                        .addComponent(editUserProfileButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(connectionMapRDB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(companyMapRDB)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
@@ -155,7 +186,7 @@ public class DashboardPanel extends CardSubpanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addCompanyButton))
                     .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -176,13 +207,33 @@ public class DashboardPanel extends CardSubpanel {
         this.view.displayView("CompanyProfilePanel");
     }//GEN-LAST:event_addCompanyButtonActionPerformed
 
+    private void companyMapRDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyMapRDBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_companyMapRDBActionPerformed
+
+    private void connectionMapRDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionMapRDBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_connectionMapRDBActionPerformed
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        if(companyMapRDB.isSelected()){
+            
+        }else{
+            User[] users = session.searchConnectedUser(searchTextField.getText());
+            showConnections(users);
+        }
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCompanyButton;
     private javax.swing.JButton addConnectionButton;
+    private javax.swing.JRadioButton companyMapRDB;
     private javax.swing.JList<User> connectionList;
+    private javax.swing.JRadioButton connectionMapRDB;
     private javax.swing.JButton editUserProfileButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
+    private javax.swing.ButtonGroup mapTypeRDBGroup;
     private com.tenaciouspanda.jobstretch.MapsPanel mapsPanel;
     private javax.swing.JButton refreshButton;
     private javax.swing.JTextField searchTextField;

@@ -17,6 +17,7 @@ public class SessionTester {
     public void testAll(){
         testAuthentication();
         testSearchUnconnectedUser();
+        testSearchConnectedUser();
     }
     public void testAuthentication(){
         Session s = new Session();
@@ -37,6 +38,15 @@ public class SessionTester {
         s.authenticate("test", "test");
         User[] users = s.searchUnconnectedUser("","");
         System.out.println("UNCONNECTED USERS");
+        for(User u : users){
+            System.out.println(u);
+        }
+    }
+    public void testSearchConnectedUser(){
+        Session s = new Session();
+        s.authenticate("test", "test");
+        User[] users = s.searchConnectedUser("est");
+        System.out.println("CONNECTED USERS");
         for(User u : users){
             System.out.println(u);
         }

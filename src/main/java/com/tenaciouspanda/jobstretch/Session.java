@@ -59,6 +59,9 @@ public class Session {
     public User[] searchUsers(String fname, String lname){
          return DBconnection.searchUser(fname, lname);
      }
+    public User[] searchConnectedUser(String queryString){
+        return DBconnection.searchConnectedUser(currentUser.getUserID(), queryString);
+    }
     public User[] searchUnconnectedUser(String fname, String lname){
         return DBconnection.searchUnconnectedUser(currentUser.getUserID(), fname, lname);
     }
