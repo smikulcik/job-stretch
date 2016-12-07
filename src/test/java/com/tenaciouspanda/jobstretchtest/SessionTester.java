@@ -7,6 +7,7 @@
 package com.tenaciouspanda.jobstretchtest;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.Business;
 import com.tenaciouspanda.jobstretch.database.User;
 
 /**
@@ -18,6 +19,7 @@ public class SessionTester {
         testAuthentication();
         testSearchUnconnectedUser();
         testSearchConnectedUser();
+        testSearchBusiness();
     }
     public void testAuthentication(){
         Session s = new Session();
@@ -49,6 +51,15 @@ public class SessionTester {
         System.out.println("CONNECTED USERS");
         for(User u : users){
             System.out.println(u);
+        }
+    }
+    public void testSearchBusiness(){
+        Session s = new Session();
+        s.authenticate("test", "test");
+        Business[] businesses = s.searchBusinesses("");
+        System.out.println("BUSINESSES");
+        for(Business b : businesses){
+            System.out.println(b);
         }
     }
 }

@@ -6,8 +6,8 @@
 
 package com.tenaciouspanda.jobstretch.frontend;
 
-import com.tenaciouspanda.jobstretch.MapsPanel;
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.BusLocations;
 import com.tenaciouspanda.jobstretch.database.Business;
 import com.tenaciouspanda.jobstretch.database.User;
 import java.util.ArrayList;
@@ -44,6 +44,17 @@ public class DashboardPanel extends CardSubpanel {
             mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
         }
         view.setStatus("Found " + users.length + " connections");
+    }
+
+    public void showCompanies(Business[] businesses){
+        connectionList.setListData(businesses);
+        
+        mapsPanel.clear();
+        for(Business b: businesses){
+            for(BusLocations bl : b.getLocations())
+            mapsPanel.addMarker(bl.getLat(), bl.getLon(), b.toString());
+        }
+        view.setStatus("Found " + businesses.length + " businesses");
     }
     
     /**
@@ -222,7 +233,8 @@ public class DashboardPanel extends CardSubpanel {
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         if(companyMapRDB.isSelected()){
-            
+            Business[] businesses = session.searchBusinesses(searchTextField.getText());
+            showCompanies(businesses);
         }else{
             User[] users = session.searchConnectedUser(searchTextField.getText());
             showConnections(users);

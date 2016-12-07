@@ -93,7 +93,12 @@ public class Business {
     protected void setFounded(Date d) {
         busFounded=d;
     }
-    public ArrayList getLocations() {
+    public ArrayList<BusLocations> getLocations() {
         return busLocations;
+    }
+    
+    @Override
+    public String toString(){
+        return busName + " (" + busIndustry + ")";
     }
 }

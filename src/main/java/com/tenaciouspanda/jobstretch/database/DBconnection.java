@@ -227,8 +227,7 @@ public class DBconnection {
                 currentUser.setStreet(rs.getString(5));
                 currentUser.setState(rs.getString(6));
                 currentUser.setZip(rs.getInt(7));
-                currentUser.setBusiness(rs.getString(8)); 
-                currentUser.updateCoordinates();
+                currentUser.setBusiness(rs.getString(8));
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -574,6 +573,48 @@ public class DBconnection {
         }
         return results;
     }
+            
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static Business[] searchBusinesses (String query) {
+        if(!StaticConnection.checkConnection())
+            StaticConnection.initializeConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Business[] results = {};
+        try {
+            String search = "SELECT businessName " +
+                "FROM business WHERE businessName like ?";
+            pst = StaticConnection.conn.prepareStatement(search);
+            pst.setString(1, "%" + query + "%");
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.last();
+            int max = rs.getRow();
+            results = new Business[max];
+            rs.beforeFirst();
+            for (int a=0;a<max;a++) {
+                rs.next();
+                results[a] = new Business(rs.getString(1));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if(rs!=null) {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {}
+            }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
+        }
+        return results;
+    }
     
     /*Business*/
     //pulls information for businesses. Untested.
@@ -586,7 +627,7 @@ public class DBconnection {
             String getBus = "SELECT industry,founded,website,summary " +
                 "FROM business WHERE business.businessName=?";
             pst = StaticConnection.conn.prepareStatement(getBus);
-            pst.setString(0, currentBus.getName());
+            pst.setString(1, currentBus.getName());
             pst.execute();
             rs = pst.getResultSet();
             rs.next();

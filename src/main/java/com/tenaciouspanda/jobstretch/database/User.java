@@ -18,7 +18,6 @@ public class User {
         userID=uID;
         zip=0;
         employed=false;
-        latlng = new LatLng();
         DBconnection.setUser(this, userID);
     }
     /**
@@ -352,6 +351,8 @@ public class User {
      * @return 
      */
     public float getLat() {
+        if(latlng == null)
+            updateCoordinates();
         return latlng.getLat();
     }
     /**
@@ -359,6 +360,8 @@ public class User {
      * @param l 
      */
     protected void setLat(float l) {
+        if(latlng == null)
+            latlng = new LatLng();
         latlng.setLat(l);
     }
     /**
@@ -366,6 +369,8 @@ public class User {
      * @return 
      */
     public float getLon() {
+        if(latlng == null)
+            updateCoordinates();
         return latlng.getLng();
     }
     /**
@@ -373,6 +378,8 @@ public class User {
      * @param l 
      */
     protected void setLon(float l) {
+        if(latlng == null)
+            latlng = new LatLng();
         latlng.setLng(l);
     }
     
@@ -381,6 +388,8 @@ public class User {
      * @return the user's LatLng
      */
     public LatLng getLatLng(){
+        if(latlng == null)
+            updateCoordinates();
         return latlng;
     }
     
@@ -403,8 +412,6 @@ public class User {
 
     void updateCoordinates() {
         Geocoder g = new Geocoder();
-        GeocodingResult r = g.geocode(business + " " + street + " " + city + ", " + state + " " + zip);
-        latlng.setLat((float)r.geometry.location.lat);
-        latlng.setLng((float)r.geometry.location.lng);
+        latlng = g.geocode(business + " " + street + " " + city + ", " + state + " " + zip);
     }
 }
