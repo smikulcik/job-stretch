@@ -5,6 +5,7 @@
  */
 package com.tenaciouspanda.jobstretch.frontend;
 
+import com.tenaciouspanda.jobstretch.MapsPanel;
 import com.tenaciouspanda.jobstretch.Session;
 import java.awt.CardLayout;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import javax.swing.JFrame;
 public class ViewManager extends JFrame {
 
     private Session session;
-    HashMap<String, CardSubpanel> cardLookup = new HashMap();
+    private HashMap<String, CardSubpanel> cardLookup = new HashMap();
     
     /**
      * Creates new form ViewManager

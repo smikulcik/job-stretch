@@ -7,6 +7,7 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.Business;
 
 /**
  *
@@ -22,6 +23,13 @@ public class CompanyDetailPanel extends CardSubpanel {
     public CompanyDetailPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+    }
+    
+    @Override
+    public void onShow(){
+        if(session.getSelected() instanceof Business){
+            
+        }
     }
 
     /**

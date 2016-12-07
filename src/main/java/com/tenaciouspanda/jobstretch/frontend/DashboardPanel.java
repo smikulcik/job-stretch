@@ -6,7 +6,9 @@
 
 package com.tenaciouspanda.jobstretch.frontend;
 
+import com.tenaciouspanda.jobstretch.MapsPanel;
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.Business;
 import com.tenaciouspanda.jobstretch.database.User;
 import java.util.ArrayList;
 
@@ -43,7 +45,7 @@ public class DashboardPanel extends CardSubpanel {
         }
         view.setStatus("Found " + users.length + " connections");
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,6 +90,11 @@ public class DashboardPanel extends CardSubpanel {
         viewConnectionDetailsButton.setText("View Connection Details");
 
         connectionList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        connectionList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                connectionListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(connectionList);
 
         addConnectionButton.setText("Add Connection");
@@ -136,16 +143,14 @@ public class DashboardPanel extends CardSubpanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(addConnectionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(addCompanyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                            .addComponent(mapsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(logoutButton)
@@ -156,7 +161,7 @@ public class DashboardPanel extends CardSubpanel {
                             .addComponent(connectionMapRDB)
                             .addComponent(companyMapRDB))
                         .addGap(18, 18, 18)
-                        .addComponent(searchTextField)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(refreshButton)))
                 .addGap(26, 26, 26))
@@ -178,7 +183,7 @@ public class DashboardPanel extends CardSubpanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                    .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(mapsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -224,11 +229,23 @@ public class DashboardPanel extends CardSubpanel {
         }
     }//GEN-LAST:event_refreshButtonActionPerformed
 
+    private void connectionListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectionListMouseClicked
+        if (evt.getClickCount() == 2) {
+            Object o = connectionList.getSelectedValue();
+            session.select(o);
+            if(o instanceof User){
+                view.displayView("PersonDetailPanel");
+            }else if(o instanceof Business){
+                view.displayView("CompanyDetailPanel");
+            }
+        }
+    }//GEN-LAST:event_connectionListMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addCompanyButton;
     private javax.swing.JButton addConnectionButton;
     private javax.swing.JRadioButton companyMapRDB;
-    private javax.swing.JList<User> connectionList;
+    private javax.swing.JList<Object> connectionList;
     private javax.swing.JRadioButton connectionMapRDB;
     private javax.swing.JButton editUserProfileButton;
     private javax.swing.JScrollPane jScrollPane1;

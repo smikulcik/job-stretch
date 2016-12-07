@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Session {
     protected User currentUser;
+    private Object selected = null;
     
     public Session(){
     }
@@ -72,5 +73,13 @@ public class Session {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    public void select(Object o) {
+        selected = o;
+    }
+
+    public Object getSelected() {
+        return selected;
     }
 }
