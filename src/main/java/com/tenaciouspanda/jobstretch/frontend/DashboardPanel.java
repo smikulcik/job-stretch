@@ -41,7 +41,8 @@ public class DashboardPanel extends CardSubpanel {
         
         mapsPanel.clear();
         for(User u: users){
-            mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
+            if(u.getEmployed() == true)
+                mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
         }
         view.setStatus("Found " + users.length + " connections");
     }

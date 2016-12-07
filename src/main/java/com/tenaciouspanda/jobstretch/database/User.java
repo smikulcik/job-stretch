@@ -1,6 +1,4 @@
 package com.tenaciouspanda.jobstretch.database;
-import com.google.maps.model.GeocodingResult;
-import com.tenaciouspanda.jobstretch.Geocoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +16,7 @@ public class User {
         userID=uID;
         zip=0;
         employed=false;
+        latlng = new LatLng();
         DBconnection.setUser(this, userID);
     }
     /**
@@ -351,8 +350,6 @@ public class User {
      * @return 
      */
     public float getLat() {
-        if(latlng == null)
-            updateCoordinates();
         return latlng.getLat();
     }
     /**
@@ -369,8 +366,6 @@ public class User {
      * @return 
      */
     public float getLon() {
-        if(latlng == null)
-            updateCoordinates();
         return latlng.getLng();
     }
     /**
@@ -378,8 +373,6 @@ public class User {
      * @param l 
      */
     protected void setLon(float l) {
-        if(latlng == null)
-            latlng = new LatLng();
         latlng.setLng(l);
     }
     
@@ -388,8 +381,6 @@ public class User {
      * @return the user's LatLng
      */
     public LatLng getLatLng(){
-        if(latlng == null)
-            updateCoordinates();
         return latlng;
     }
     
@@ -408,10 +399,5 @@ public class User {
 
     public void clearContacts() {
         connections = new ArrayList();
-    }
-
-    void updateCoordinates() {
-        Geocoder g = new Geocoder();
-        latlng = g.geocode(business + " " + street + " " + city + ", " + state + " " + zip);
     }
 }

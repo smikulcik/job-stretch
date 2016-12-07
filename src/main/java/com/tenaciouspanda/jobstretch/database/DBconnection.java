@@ -1,4 +1,5 @@
 package com.tenaciouspanda.jobstretch.database;
+import com.tenaciouspanda.jobstretch.Geocoder;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -82,7 +83,9 @@ public class DBconnection {
                 result = -1;//error: username exist
                 throw new Exception("Username Exist");
             }
-            int locationID = getLocationID(bus,city,street,state,zip,0,0);
+            Geocoder g = new Geocoder();
+            LatLng latlng = g.geocode(bus + " " + street + ", " + city + ", " + state + " " + zip);
+            int locationID = getLocationID(bus,city,street,state,zip,latlng.getLat(), latlng.getLng());
             //claim account if exists
             int newUserID=0;
             String checkExistAccount = "SELECT userTable.userID FROM userTable "
@@ -212,7 +215,7 @@ public class DBconnection {
                 currentUser.setSummary(rs.getString(4));
                 currentUser.setEmployed(rs.getBoolean(5));
             }
-            String getEmpInfo = "SELECT startDate,endDate,jobTitle,city,street,state,zip,businessName FROM employment "
+            String getEmpInfo = "SELECT startDate,endDate,jobTitle,city,street,state,zip,businessName,lat,lon FROM employment "
                     +"JOIN businessLocations ON employment.businessInfoID = businessLocations.locationID "
                     + "WHERE userID = ?";
             pst = StaticConnection.conn.prepareStatement(getEmpInfo);
@@ -228,6 +231,10 @@ public class DBconnection {
                 currentUser.setState(rs.getString(6));
                 currentUser.setZip(rs.getInt(7));
                 currentUser.setBusiness(rs.getString(8));
+                currentUser.setLat(rs.getFloat(9));
+                currentUser.setLon(rs.getFloat(10));
+            }else{
+                currentUser.setEmployed(false);
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -351,7 +358,10 @@ public class DBconnection {
             if(rs.next())
                 newKey=rs.getInt(1);
             
-            int locationID = getLocationID(bus,city,street,state,zip,0,0);
+            
+            Geocoder g = new Geocoder();
+            LatLng latlng = g.geocode(bus + " " + street + ", " + city + ", " + state + " " + zip);
+            int locationID = getLocationID(bus,city,street,state,zip,latlng.getLat(), latlng.getLng());
             
             String addConnE = "INSERT INTO employment (userID, startDate, endDate, jobTitle, businessInfoID) VALUES (?,?,?,?,?)";//username, password, 
             pst = StaticConnection.conn.prepareStatement(addConnE);

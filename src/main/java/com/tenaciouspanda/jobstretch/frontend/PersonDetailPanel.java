@@ -6,8 +6,6 @@
 
 package com.tenaciouspanda.jobstretch.frontend;
 
-import com.google.maps.model.GeocodingResult;
-import com.tenaciouspanda.jobstretch.Geocoder;
 import com.tenaciouspanda.jobstretch.Session;
 import com.tenaciouspanda.jobstretch.database.User;
 
