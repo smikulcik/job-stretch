@@ -1,9 +1,11 @@
 package com.tenaciouspanda.jobstretch.database;
+import com.tenaciouspanda.jobstretch.Geocoder;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBconnection {
     final static public int RESULT_OK = 0;
@@ -83,17 +85,17 @@ public class DBconnection {
                 result = -1;//error: username exist
                 throw new Exception("Username Exist");
             }
-            int locationID = getLocationID(bus,city,street,state,zip,0,0);
+            Geocoder g = new Geocoder();
+            LatLng latlng = g.geocode(bus + " " + street + ", " + city + ", " + state + " " + zip);
+            int locationID = getLocationID(bus,city,street,state,zip,latlng.getLat(), latlng.getLng());
             //claim account if exists
             int newUserID=0;
             String checkExistAccount = "SELECT userTable.userID FROM userTable "
                     + "JOIN employment ON userTable.userID=employment.userID "
-                    + "WHERE fname=? AND lname=? AND jobTitle=? AND businessInfoID=? AND username IS NULL";
+                    + "WHERE fname=? AND lname=? AND username IS NULL";
             pst = StaticConnection.conn.prepareStatement(checkExistAccount);
             pst.setString(1, fname);
             pst.setString(2, lname);
-            pst.setString(3, occu);
-            pst.setInt(4, locationID);
             pst.execute();
             rs = pst.getResultSet();
             if(rs != null && rs.next()) {
@@ -213,7 +215,7 @@ public class DBconnection {
                 currentUser.setSummary(rs.getString(4));
                 currentUser.setEmployed(rs.getBoolean(5));
             }
-            String getEmpInfo = "SELECT startDate,endDate,jobTitle,city,street,state,zip,businessName FROM employment "
+            String getEmpInfo = "SELECT startDate,endDate,jobTitle,city,street,state,zip,businessName,lat,lon FROM employment "
                     +"JOIN businessLocations ON employment.businessInfoID = businessLocations.locationID "
                     + "WHERE userID = ?";
             pst = StaticConnection.conn.prepareStatement(getEmpInfo);
@@ -228,7 +230,11 @@ public class DBconnection {
                 currentUser.setStreet(rs.getString(5));
                 currentUser.setState(rs.getString(6));
                 currentUser.setZip(rs.getInt(7));
-                currentUser.setBusiness(rs.getString(8));    
+                currentUser.setBusiness(rs.getString(8));
+                currentUser.setLat(rs.getFloat(9));
+                currentUser.setLon(rs.getFloat(10));
+            }else{
+                currentUser.setEmployed(false);
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -308,6 +314,7 @@ public class DBconnection {
                 connectionIDs[pos] = rs.getInt(1);
                 pos++;
             }
+            currentUser.clearContacts();
             for (int cID : connectionIDs) {
                 User contact = new User(cID);
                 setUser(contact,cID);
@@ -334,13 +341,13 @@ public class DBconnection {
     
     /*Contacts*/
     //add connection that does not have an account. userID refers to the user who is logged, not contact's userID. Untested.
-    public static boolean addNonexistantContact(int userID, String user, String pass, 
+    public static boolean addNonexistantContact(int userID,
             String fname, String lname, String city, String street, String state, 
             int zip, String occu, String bus, Date start, Date end, boolean employed) {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            String addConnUT = "INSERT INTO userTable (firstName, lastName, employed) VALUES (?,?,?)";
+            String addConnUT = "INSERT INTO userTable (fname, lname, employed) VALUES (?,?,?)";
             pst = StaticConnection.conn.prepareStatement(addConnUT, PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, fname);
             pst.setString(2, lname);
@@ -351,7 +358,10 @@ public class DBconnection {
             if(rs.next())
                 newKey=rs.getInt(1);
             
-            int locationID = getLocationID(bus,city,street,state,zip,0,0);
+            
+            Geocoder g = new Geocoder();
+            LatLng latlng = g.geocode(bus + " " + street + ", " + city + ", " + state + " " + zip);
+            int locationID = getLocationID(bus,city,street,state,zip,latlng.getLat(), latlng.getLng());
             
             String addConnE = "INSERT INTO employment (userID, startDate, endDate, jobTitle, businessInfoID) VALUES (?,?,?,?,?)";//username, password, 
             pst = StaticConnection.conn.prepareStatement(addConnE);
@@ -364,7 +374,7 @@ public class DBconnection {
             pst.setInt(5, locationID);
             pst.execute();
                 
-            String addCon = "INSERT INTO connections VALUES (?,?), VALUES (?,?)";
+            String addCon = "INSERT INTO connections VALUES (?,?), (?,?)";
             pst = StaticConnection.conn.prepareStatement(addCon);
             pst.setInt(1, userID);
             pst.setInt(2, newKey);
@@ -449,7 +459,7 @@ public class DBconnection {
             StaticConnection.initializeConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
-        User[] results = null;
+        User[] results = {};
         try {
             String search = "SELECT userID from userTable " +
                     "WHERE fname LIKE ? AND lname LIKE ?";
@@ -486,6 +496,136 @@ public class DBconnection {
         return results;
     }
     
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static User[] searchUnconnectedUser (int userID, String fname, String lname) {
+        if(!StaticConnection.checkConnection())
+            StaticConnection.initializeConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        User[] results = {};
+        try {
+            String search = "SELECT userID from userTable " +
+                    "WHERE fname LIKE ? AND lname LIKE ? AND userID not in (select userConnection from connections where userID=?)";
+            pst = StaticConnection.conn.prepareStatement(search);
+            pst.setString(1, "%" + fname + "%");
+            pst.setString(2, "%" + lname + "%");
+            pst.setInt(3, userID);
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.last();
+            int max = rs.getRow();
+            results = new User[max];
+            rs.beforeFirst();
+            for (int a=0;a<max;a++) {
+                rs.next();
+                results[a] = new User(rs.getInt(1));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if(rs!=null) {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {}
+            }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
+        }
+        return results;
+    }
+    
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static User[] searchConnectedUser (int userID, String query) {
+        if(!StaticConnection.checkConnection())
+            StaticConnection.initializeConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        User[] results = {};
+        try {
+            String search = "SELECT userID, fname, lname from userTable " +
+                    "WHERE userID in (select userConnection from connections where userID=?)" +
+                    "HAVING concat(fname, ' ', lname) LIKE ? ";
+            pst = StaticConnection.conn.prepareStatement(search);
+            pst.setInt(1, userID);
+            pst.setString(2, "%" + query + "%");
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.last();
+            int max = rs.getRow();
+            results = new User[max];
+            rs.beforeFirst();
+            for (int a=0;a<max;a++) {
+                rs.next();
+                results[a] = new User(rs.getInt(1));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if(rs!=null) {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {}
+            }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
+        }
+        return results;
+    }
+            
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static Business[] searchBusinesses (String query) {
+        if(!StaticConnection.checkConnection())
+            StaticConnection.initializeConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        Business[] results = {};
+        try {
+            String search = "SELECT businessName " +
+                "FROM business WHERE businessName like ?";
+            pst = StaticConnection.conn.prepareStatement(search);
+            pst.setString(1, "%" + query + "%");
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.last();
+            int max = rs.getRow();
+            results = new Business[max];
+            rs.beforeFirst();
+            for (int a=0;a<max;a++) {
+                rs.next();
+                results[a] = new Business(rs.getString(1));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if(rs!=null) {
+                try {
+                    rs.close();
+                }
+                catch (Exception e) {}
+            }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
+        }
+        return results;
+    }
+    
     /*Business*/
     //pulls information for businesses. Untested.
     public static void getBusiness(Business currentBus) {
@@ -497,7 +637,7 @@ public class DBconnection {
             String getBus = "SELECT industry,founded,website,summary " +
                 "FROM business WHERE business.businessName=?";
             pst = StaticConnection.conn.prepareStatement(getBus);
-            pst.setString(0, currentBus.getName());
+            pst.setString(1, currentBus.getName());
             pst.execute();
             rs = pst.getResultSet();
             rs.next();
@@ -512,6 +652,7 @@ public class DBconnection {
             pst.setString(1, currentBus.getName());
             pst.execute();
             rs = pst.getResultSet();
+            currentBus.getLocations().clear();
             while(rs.next()) {
                 currentBus.setLocations(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getFloat(6),rs.getFloat(7));
             }
@@ -641,11 +782,11 @@ public class DBconnection {
     }
     /**
      * Adds a new business into the database.
-     * @param bn
-     * @param i
-     * @param f
-     * @param w
-     * @param s
+     * @param bn business name
+     * @param i industry
+     * @param f founded date
+     * @param w website
+     * @param s summary
      * @return 
      */
     public static int addNewBusiness(String bn, String i, Date f, String w, String s) {
@@ -692,6 +833,30 @@ public class DBconnection {
         }
         return success;
     }
+    
+    public static boolean addBusinessLocation(String busName, String street, String city, String state, int zip){
+        String addBus = "INSERT INTO businessLocations (businessName, city, street, state, zip,lat,lon) VALUES (?,?,?,?,?,?,?)";
+        PreparedStatement pst;
+        ResultSet rs;
+        
+        LatLng coord = (new Geocoder()).geocode(street + " " + city + " " + state + " " + zip);
+        try {
+            pst = StaticConnection.conn.prepareStatement(addBus);
+            pst.setString(1, busName);
+            pst.setString(2, city);
+            pst.setString(3, street);
+            pst.setString(4, state);
+            pst.setInt(5, zip);
+            pst.setFloat(6, coord.getLat());
+            pst.setFloat(7, coord.getLng());
+            pst.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * Updates location changes into the database.
      * @param locID

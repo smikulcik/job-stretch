@@ -7,25 +7,41 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import com.tenaciouspanda.jobstretch.database.BusLocations;
+import com.tenaciouspanda.jobstretch.database.Business;
 
 /**
  *
  * @author Simon
  */
-public class CompanyDetailPanel extends javax.swing.JPanel {
+public class CompanyDetailPanel extends CardSubpanel {
     
-    Session session;
-    ViewManager view;
-
     /**
      * Creates new form CompanyDetailForm
      * @param session
      * @param theView
      */
     public CompanyDetailPanel(Session session, ViewManager theView) {
-        this.session = session;
-        this.view = theView;
+        super(session, theView);
         initComponents();
+    }
+    
+    @Override
+    public void onShow(){
+        if(session.getSelected() instanceof Business){
+            Business b = (Business)session.getSelected();
+            b.update();
+            businessNameLbl.setText(b.getName());
+            industryLbl.setText(b.getIndustry());
+            foundedLbl.setText(b.getFounded().toString());
+            websiteLbl.setText(b.getWebsite());
+            summaryTextBox.setText(b.getSummary());
+            
+            BusLocations[] locs = new BusLocations[b.getLocations().size()];
+            b.getLocations().toArray(locs);
+            locationsListBox.setListData(locs);
+            
+        }
     }
 
     /**
@@ -39,27 +55,22 @@ public class CompanyDetailPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
-        addEmployeeButton = new javax.swing.JButton();
         summaryLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        editButton = new javax.swing.JButton();
-        saveButton1 = new javax.swing.JButton();
+        summaryTextBox = new javax.swing.JTextArea();
         dataLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         industryLabel = new javax.swing.JLabel();
         foundedLabel = new javax.swing.JLabel();
-        locationLabel = new javax.swing.JLabel();
-        industryComboBox = new javax.swing.JComboBox<>();
-        dateInput = new javax.swing.JTextField();
-        addressInput = new javax.swing.JTextField();
-        cityField = new javax.swing.JTextField();
-        stateComboBox = new javax.swing.JComboBox<>();
-        zipCodeInput = new javax.swing.JTextField();
         websiteLabel = new javax.swing.JLabel();
-        websiteField = new javax.swing.JTextField();
-        editButton1 = new javax.swing.JButton();
-        saveButton2 = new javax.swing.JButton();
+        industryLbl = new javax.swing.JLabel();
+        foundedLbl = new javax.swing.JLabel();
+        websiteLbl = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        locationsListBox = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
+        addLocationBtn = new javax.swing.JButton();
+        businessNameLbl = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Company Profile");
@@ -71,33 +82,15 @@ public class CompanyDetailPanel extends javax.swing.JPanel {
             }
         });
 
-        addEmployeeButton.setText("Add Employee");
-        addEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addEmployeeButtonActionPerformed(evt);
-            }
-        });
-
         summaryLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         summaryLabel.setText("Summary");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        editButton.setText("Edit");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
-            }
-        });
-
-        saveButton1.setText("Submit");
-        saveButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButton1ActionPerformed(evt);
-            }
-        });
+        summaryTextBox.setEditable(false);
+        summaryTextBox.setBackground(new java.awt.Color(240, 240, 240));
+        summaryTextBox.setColumns(20);
+        summaryTextBox.setRows(5);
+        summaryTextBox.setBorder(null);
+        jScrollPane1.setViewportView(summaryTextBox);
 
         dataLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         dataLabel.setText("Data");
@@ -108,157 +101,134 @@ public class CompanyDetailPanel extends javax.swing.JPanel {
 
         foundedLabel.setText("Founded");
 
-        locationLabel.setText("Location");
-
-        industryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Automotive", "Finance" }));
-
-        dateInput.setText("00/00/0000");
-
-        addressInput.setText("Street Address");
-
-        cityField.setText("City");
-
-        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KY", "AR" }));
-
-        zipCodeInput.setText("Zip Code");
-
         websiteLabel.setText("Website");
 
-        websiteField.setText("www.example.com");
+        industryLbl.setText("jLabel2");
+
+        foundedLbl.setText("jLabel2");
+
+        websiteLbl.setText("jLabel2");
+
+        jScrollPane2.setViewportView(locationsListBox);
+
+        jLabel2.setText("Locations");
+
+        addLocationBtn.setText("Add Location");
+        addLocationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addLocationBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(industryLabel)
-                    .addComponent(foundedLabel)
-                    .addComponent(locationLabel)
-                    .addComponent(websiteLabel))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addressInput)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(zipCodeInput, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(industryComboBox, 0, 225, Short.MAX_VALUE)
-                            .addComponent(dateInput))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(websiteField))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(industryLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(industryLbl))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(foundedLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(foundedLbl))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(websiteLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(websiteLbl)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addLocationBtn)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(industryLabel)
-                            .addComponent(industryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(foundedLabel))
-                    .addComponent(dateInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(industryLabel)
+                    .addComponent(industryLbl))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(locationLabel)
-                    .addComponent(addressInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(zipCodeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(foundedLabel)
+                    .addComponent(foundedLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(websiteLabel)
-                    .addComponent(websiteField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(websiteLbl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(3, 3, 3)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addLocationBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        editButton1.setText("Edit");
-        editButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButton1ActionPerformed(evt);
-            }
-        });
-
-        saveButton2.setText("Submit");
-        saveButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButton2ActionPerformed(evt);
-            }
-        });
+        businessNameLbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        businessNameLbl.setText("CompanyName");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(138, 138, 138)
+                            .addComponent(summaryLabel)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(backButton)
+                        .addGap(118, 118, 118)
+                        .addComponent(jLabel1)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(191, 191, 191)
-                        .addComponent(addEmployeeButton))
+                        .addComponent(dataLabel)
+                        .addGap(198, 198, 198))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(saveButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(128, 128, 128)
-                                    .addComponent(summaryLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(61, 61, 61)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(dataLabel)
-                                        .addGap(143, 143, 143)
-                                        .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(saveButton2, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(businessNameLbl)))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addEmployeeButton)
-                        .addComponent(jLabel1))
-                    .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backButton)
+                    .addComponent(jLabel1)
+                    .addComponent(businessNameLbl))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(summaryLabel)
-                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton1)
-                    .addComponent(saveButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -266,50 +236,29 @@ public class CompanyDetailPanel extends javax.swing.JPanel {
         this.view.displayView("DashboardPanel");
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addEmployeeButtonActionPerformed
-
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editButtonActionPerformed
-
-    private void saveButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveButton1ActionPerformed
-
-    private void editButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editButton1ActionPerformed
-
-    private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveButton2ActionPerformed
+    private void addLocationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLocationBtnActionPerformed
+        this.view.displayView("AddCompanyLocationPanel");
+    }//GEN-LAST:event_addLocationBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addEmployeeButton;
-    private javax.swing.JTextField addressInput;
+    private javax.swing.JButton addLocationBtn;
     private javax.swing.JButton backButton;
-    private javax.swing.JTextField cityField;
+    private javax.swing.JLabel businessNameLbl;
     private javax.swing.JLabel dataLabel;
-    private javax.swing.JTextField dateInput;
-    private javax.swing.JButton editButton;
-    private javax.swing.JButton editButton1;
     private javax.swing.JLabel foundedLabel;
-    private javax.swing.JComboBox<String> industryComboBox;
+    private javax.swing.JLabel foundedLbl;
     private javax.swing.JLabel industryLabel;
+    private javax.swing.JLabel industryLbl;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel locationLabel;
-    private javax.swing.JButton saveButton1;
-    private javax.swing.JButton saveButton2;
-    private javax.swing.JComboBox<String> stateComboBox;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<BusLocations> locationsListBox;
     private javax.swing.JLabel summaryLabel;
-    private javax.swing.JTextField websiteField;
+    private javax.swing.JTextArea summaryTextBox;
     private javax.swing.JLabel websiteLabel;
-    private javax.swing.JTextField zipCodeInput;
+    private javax.swing.JLabel websiteLbl;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,6 +15,10 @@ public class Business {
         busName = n;
         DBconnection.getBusiness(this);
     }
+    
+    public void update(){
+        DBconnection.getBusiness(this);
+    }
     public boolean updateBus(String n, String i, String w, String s, Date f) {
         busName = n;
         busIndustry = i;
@@ -93,7 +97,12 @@ public class Business {
     protected void setFounded(Date d) {
         busFounded=d;
     }
-    public ArrayList getLocations() {
+    public ArrayList<BusLocations> getLocations() {
         return busLocations;
+    }
+    
+    @Override
+    public String toString(){
+        return busName + " (" + busIndustry + ")";
     }
 }

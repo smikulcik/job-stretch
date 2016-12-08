@@ -7,12 +7,16 @@ package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
 import java.awt.CardLayout;
+import java.util.HashMap;
 import javax.swing.JFrame;
 
 
 public class ViewManager extends JFrame {
 
     private Session session;
+    private HashMap<String, CardSubpanel> cardLookup = new HashMap();
+    private CardSubpanel currentSubpanel = null;
+    
     /**
      * Creates new form ViewManager
      */
@@ -26,30 +30,48 @@ public class ViewManager extends JFrame {
         DashboardPanel dashboard = new DashboardPanel(session, this);
         LoginPanel login = new LoginPanel(session, this);
         CompanyDetailPanel cd = new CompanyDetailPanel(session, this);
-        CompanyProfilePanel cp = new CompanyProfilePanel(session, this);
         PersonDetailPanel pd = new PersonDetailPanel(session, this);
         RegistrationPanel rp = new RegistrationPanel(session, this);
         UserFoundPanel ufp = new UserFoundPanel(session, this);
         UserProfilePanel upp = new UserProfilePanel(session, this);
         AddConnectionPanel acp = new AddConnectionPanel(session, this);
+        AddNewConnectionPanel ancp = new AddNewConnectionPanel(session, this);
+        AddConnectionDeciderPanel acdp = new AddConnectionDeciderPanel(session, this);
+        AddCompanyPanel acpp = new AddCompanyPanel(session, this);
+        AddCompanyLocationPanel aclp = new AddCompanyLocationPanel(session, this);
         
-        cardPanel.add(dashboard, "DashboardPanel");
-        cardPanel.add(login, "LoginPanel");
-        cardPanel.add(cd, "CompanyDetailPanel");
-        cardPanel.add(cp, "CompanyProfilePanel");
-        cardPanel.add(pd, "PersonDetailPanel");
-        cardPanel.add(rp, "RegistrationPanel");
-        cardPanel.add(ufp, "UserFoundPanel");
-        cardPanel.add(upp, "UserProfilePanel");
-        cardPanel.add(acp, "AddConnectionPanel");
+        cardLookup.put("DashboardPanel", dashboard);
+        cardLookup.put("LoginPanel", login);
+        cardLookup.put("CompanyDetailPanel", cd);
+        cardLookup.put("PersonDetailPanel", pd);
+        cardLookup.put("RegistrationPanel", rp);
+        cardLookup.put("UserFoundPanel", ufp);
+        cardLookup.put("UserProfilePanel", upp);
+        cardLookup.put("AddConnectionPanel", acp);
+        cardLookup.put("AddNewConnectionPanel", ancp);
+        cardLookup.put("AddConnectionDeciderPanel", acdp);
+        cardLookup.put("AddCompanyPanel", acpp);
+        cardLookup.put("AddCompanyLocationPanel", aclp);
+        
+        for(String key : cardLookup.keySet())
+            cardPanel.add(cardLookup.get(key), key);
+        
         add(cardPanel);
         displayView("LoginPanel");
         setStatus("Initialized");
     }
     void displayView(String viewTitle){
-        ((CardLayout)cardPanel.getLayout()).show(cardPanel, viewTitle);
+        if(currentSubpanel != null)
+            currentSubpanel.onHide();
+        CardLayout layout = (CardLayout)cardPanel.getLayout();
+        
+        currentSubpanel = cardLookup.get(viewTitle);
+        currentSubpanel.onShow();
+        
+        layout.show(cardPanel, viewTitle);
         setVisible(true);
         pack();
+        
     }
     
     void setStatus(String status){

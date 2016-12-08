@@ -8,6 +8,7 @@ package com.tenaciouspanda.jobstretch;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
+import com.tenaciouspanda.jobstretch.database.LatLng;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,17 +25,22 @@ public class Geocoder {
         context = new GeoApiContext().setApiKey(api_key);
     }
     
-    public GeocodingResult geocode(String location) {
-        GeocodingResult result = null;
+    public LatLng geocode(String location) {
+        LatLng result = null;
         if(context == null)
             throw new IllegalStateException("Must initialize Geocoder before use");
         
         try {
-            result =  GeocodingApi.geocode(context,
+            GeocodingResult gr = GeocodingApi.geocode(context,
                     location).await()[0];
-        } catch (Exception ex) {
+            double lat = gr.geometry.location.lat;
+            double lng = gr.geometry.location.lng;
+            return new LatLng((float)lat, (float)lng);
+        } catch (ArrayIndexOutOfBoundsException ex){
+            Logger.getLogger(Geocoder.class.getName()).log(Level.INFO, "no location found for {0}", location);
+        }catch (Exception ex) {
             Logger.getLogger(Geocoder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return result;
+        return new LatLng(0, 0);
     }
 }

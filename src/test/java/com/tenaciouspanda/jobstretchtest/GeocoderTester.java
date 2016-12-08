@@ -1,8 +1,8 @@
 package com.tenaciouspanda.jobstretchtest;
 
 
-import com.google.maps.model.GeocodingResult;
 import com.tenaciouspanda.jobstretch.Geocoder;
+import com.tenaciouspanda.jobstretch.database.LatLng;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,9 +22,9 @@ public class GeocoderTester {
     public void testGeocoder(){
         Geocoder g = new Geocoder();
         
-        GeocodingResult r = g.geocode("1600 Amphitheatre Parkway Mountain View, CA 94043");
+        LatLng latlng = g.geocode("1600 Amphitheatre Parkway Mountain View, CA 94043");
         
-        if(r == null)
+        if(latlng == null)
             throw new IllegalStateException("Got null for geocoded coordinate");
     }
 }

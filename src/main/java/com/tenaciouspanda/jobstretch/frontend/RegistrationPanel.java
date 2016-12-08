@@ -12,20 +12,53 @@ import com.tenaciouspanda.jobstretch.Session;
  *
  * @author Simon
  */
-public class RegistrationPanel extends javax.swing.JPanel {
+public class RegistrationPanel extends CardSubpanel {
+    final private String[] years = new String[220];
+    {
+        for(int i=0; i < 220; i++){
+            years[i] = "" + (2016 - i);
+        }
+    }
 
-    Session session;
-    ViewManager view;
-    
     /**
      * Creates new form RegistrationPanel
      * @param session
      * @param theView
      */
     public RegistrationPanel(Session session, ViewManager theView) {
-        this.session = session;
-        this.view = theView;
+        super(session, theView);
         initComponents();
+        startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(years));
+        endYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(years));
+    }
+    
+    @Override
+    public void onHide(){
+        clearForms();
+    }
+    
+    public void clearForms(){
+        usernameField.setText("");
+        passwordField.setText("");      
+        cityField.setText("");   
+        companyNameField.setText("");   
+        confirmPWField.setText("");   
+        employmentStatusComboBox.setSelectedIndex(0);
+        endDayComboBox.setSelectedIndex(0);
+        endMonthComboBox.setSelectedIndex(0);
+        endYearComboBox.setSelectedIndex(0);
+        firstNameField.setText("");   
+        lastNameField.setText("");   
+        occupationField.setText("");   
+        passwordField.setText("");   
+        startDayComboBox.setSelectedIndex(0);
+        startMonthComboBox.setSelectedIndex(0);
+        startYearComboBox.setSelectedIndex(0);
+        stateComboBox.setSelectedIndex(0);
+        streetAddressField.setText("");   
+        summaryTextArea.setText("");   
+        usernameField.setText("");   
+        zipCodeField.setText("");   
     }
 
     /**
@@ -113,7 +146,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
             }
         });
 
-        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KY", "AR", "HA" }));
+        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "GU", "PR", "VI" }));
 
         backButton.setText("Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +174,11 @@ public class RegistrationPanel extends javax.swing.JPanel {
         startDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
         startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016" }));
+        startYearComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startYearComboBoxActionPerformed(evt);
+            }
+        });
 
         endDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
@@ -269,18 +307,15 @@ public class RegistrationPanel extends javax.swing.JPanel {
                     .addComponent(employmentStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(employmentStatusLabel)
                     .addComponent(startLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(startMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(occupationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(occupationLabel))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(startMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(occupationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(occupationLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(companyNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,11 +339,9 @@ public class RegistrationPanel extends javax.swing.JPanel {
                     .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(zipCodeLabel)
-                        .addGap(8, 8, 8))
-                    .addComponent(zipCodeField, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(zipCodeLabel)
+                    .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(registerButton)
                 .addContainerGap())
         );
@@ -337,10 +370,10 @@ public class RegistrationPanel extends javax.swing.JPanel {
         if(session.register(usernameField.getText(), passwordField.getText(), 
                 firstNameField.getText(), lastNameField.getText(), cityField.getText(), 
                 streetAddressField.getText(), (String)stateComboBox.getSelectedItem(), zipCode, 
-                occupationField.getText(),summaryTextArea.getText(),
+                occupationField.getText(),
+                companyNameField.getText(), summaryTextArea.getText(),
                 startMonthComboBox.getSelectedItem()+"/"+startDayComboBox.getSelectedItem()+"/"+startYearComboBox.getSelectedItem(), 
-                endMonthComboBox.getSelectedItem()+"/"+endDayComboBox.getSelectedItem()+"/"+endYearComboBox.getSelectedItem(),
-                companyNameField.getText(), employed)){
+                endMonthComboBox.getSelectedItem()+"/"+endDayComboBox.getSelectedItem()+"/"+endYearComboBox.getSelectedItem(),employed)){
             view.displayView("LoginPanel");
             view.setStatus("Registered user.");
         }else{
@@ -394,6 +427,10 @@ public class RegistrationPanel extends javax.swing.JPanel {
                 endDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
         }
     }//GEN-LAST:event_endMonthComboBoxActionPerformed
+
+    private void startYearComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startYearComboBoxActionPerformed
+
+    }//GEN-LAST:event_startYearComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
