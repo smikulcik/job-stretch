@@ -16,6 +16,14 @@ public class Business {
         DBconnection.getBusiness(this);
     }
     
+    public Business(String busName, String busIndustry, String busWebsite, String busSummary, Date busFounded){
+        this.busName = busName;
+        this.busIndustry = busIndustry;
+        this.busWebsite = busWebsite;
+        this.busSummary = busSummary;
+        this.busFounded = busFounded;
+    }
+    
     public void update(){
         DBconnection.getBusiness(this);
     }

@@ -4,6 +4,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -293,51 +294,65 @@ public class DBconnection {
             }
         }
     }
-    //gets contact information based on current user and adds them to the list for the current user. Tested, works.
-    public static void setContacts(User currentUser) {
+    //Retrieving information based on search criteria. Used to display information to user that allows the user to add that person as a contact. Tested, works.
+    public static void setContacts (User currentUser) {
         if(!StaticConnection.checkConnection())
             StaticConnection.initializeConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
-        String getConIDs = "SELECT userConnection FROM connections WHERE userID = ?";
         try {
-            pst = StaticConnection.conn.prepareStatement(getConIDs);
+            String search = "SELECT userTable.userID, userName,fname,lname,summary,employed,"
+                    + "startDate,endDate,jobTitle,city,street,state,zip,businessName,lat,lon FROM userTable "
+                    + "JOIN employment ON employment.userID = userTable.userID "
+                    + "JOIN businessLocations ON employment.businessInfoID = businessLocations.locationID "
+                    + "WHERE userTable.userID in (select userConnection from connections where userID=?)";
+            
+            pst = StaticConnection.conn.prepareStatement(search);
             pst.setInt(1, currentUser.getUserID());
             pst.execute();
             rs = pst.getResultSet();
             rs.last();
-            int max = rs.getRow();
             rs.beforeFirst();
-            int[] connectionIDs = new int [max];
-            int pos=0;
-            while(rs.next()) {
-                connectionIDs[pos] = rs.getInt(1);
-                pos++;
-            }
             currentUser.clearContacts();
-            for (int cID : connectionIDs) {
-                User contact = new User(cID);
-                setUser(contact,cID);
-                currentUser.addToContactList(contact);
+            while(rs.next()){
+                currentUser.addToContactList(new User(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getBoolean(6),
+                    rs.getDate(7),
+                    rs.getDate(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getInt(13),
+                    rs.getString(14),
+                    rs.getFloat(15),
+                    rs.getFloat(16)
+                ));
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         finally {
-            if(pst!=null) {
-                try {
-                    pst.close();
-                }
-                catch (Exception e) {}
-            }
             if(rs!=null) {
                 try {
                     rs.close();
                 }
                 catch (Exception e) {}
             }
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception e) {}
+            }
         }
     }
+            
     
     /*Contacts*/
     //add connection that does not have an account. userID refers to the user who is logged, not contact's userID. Untested.
@@ -461,8 +476,11 @@ public class DBconnection {
         ResultSet rs = null;
         User[] results = {};
         try {
-            String search = "SELECT userID from userTable " +
-                    "WHERE fname LIKE ? AND lname LIKE ?";
+            String search = "SELECT userTable.userID, userName,fname,lname,summary,employed,"
+                    + "startDate,endDate,jobTitle,city,street,state,zip,businessName,lat,lon FROM userTable "
+                    + "JOIN employment ON employment.userID = userTable.userID "
+                    + "JOIN businessLocations ON employment.businessInfoID = businessLocations.locationID "
+                    + "WHERE fname LIKE ? AND lname LIKE ?";
             pst = StaticConnection.conn.prepareStatement(search);
             pst.setString(1, "%" + fname + "%");
             pst.setString(2, "%" + lname + "%");
@@ -474,7 +492,24 @@ public class DBconnection {
             rs.beforeFirst();
             for (int a=0;a<max;a++) {
                 rs.next();
-                results[a] = new User(rs.getInt(1));
+                results[a] = new User(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getBoolean(6),
+                    rs.getDate(7),
+                    rs.getDate(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getInt(13),
+                    rs.getString(14),
+                    rs.getFloat(15),
+                    rs.getFloat(16)
+                );
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -504,8 +539,12 @@ public class DBconnection {
         ResultSet rs = null;
         User[] results = {};
         try {
-            String search = "SELECT userID from userTable " +
-                    "WHERE fname LIKE ? AND lname LIKE ? AND userID not in (select userConnection from connections where userID=?)";
+            String search = "SELECT userTable.userID, userName,fname,lname,summary,employed,"
+                    + "startDate,endDate,jobTitle,city,street,state,zip,businessName,lat,lon FROM userTable "
+                    + "JOIN employment ON employment.userID = userTable.userID "
+                    + "JOIN businessLocations ON employment.businessInfoID = businessLocations.locationID "
+                    + "WHERE fname LIKE ? AND lname LIKE ? AND userTable.userID not in (select userConnection from connections where userID=?)";
+            
             pst = StaticConnection.conn.prepareStatement(search);
             pst.setString(1, "%" + fname + "%");
             pst.setString(2, "%" + lname + "%");
@@ -518,7 +557,24 @@ public class DBconnection {
             rs.beforeFirst();
             for (int a=0;a<max;a++) {
                 rs.next();
-                results[a] = new User(rs.getInt(1));
+                results[a] = new User(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getBoolean(6),
+                    rs.getDate(7),
+                    rs.getDate(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getInt(13),
+                    rs.getString(14),
+                    rs.getFloat(15),
+                    rs.getFloat(16)
+                );
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -548,8 +604,11 @@ public class DBconnection {
         ResultSet rs = null;
         User[] results = {};
         try {
-            String search = "SELECT userID, fname, lname from userTable " +
-                    "WHERE userID in (select userConnection from connections where userID=?)" +
+            String search = "SELECT userTable.userID, userName,fname,lname,summary,employed,"
+                    + "startDate,endDate,jobTitle,city,street,state,zip,businessName,lat,lon FROM userTable "
+                    + "JOIN employment ON employment.userID = userTable.userID "
+                    + "JOIN businessLocations ON employment.businessInfoID = businessLocations.locationID "
+                    + "WHERE userTable.userID in (select userConnection from connections where userID=?)" +
                     "HAVING concat(fname, ' ', lname) LIKE ? ";
             pst = StaticConnection.conn.prepareStatement(search);
             pst.setInt(1, userID);
@@ -562,7 +621,24 @@ public class DBconnection {
             rs.beforeFirst();
             for (int a=0;a<max;a++) {
                 rs.next();
-                results[a] = new User(rs.getInt(1));
+                results[a] = new User(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getBoolean(6),
+                    rs.getDate(7),
+                    rs.getDate(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getInt(13),
+                    rs.getString(14),
+                    rs.getFloat(15),
+                    rs.getFloat(16)
+                );
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -590,23 +666,47 @@ public class DBconnection {
             StaticConnection.initializeConnection();
         PreparedStatement pst = null;
         ResultSet rs = null;
-        Business[] results = {};
+        HashMap<String, Business> results = new HashMap();
         try {
-            String search = "SELECT businessName " +
+            String search = "SELECT businessName,industry,website,summary,founded " +
                 "FROM business WHERE businessName like ?";
             pst = StaticConnection.conn.prepareStatement(search);
             pst.setString(1, "%" + query + "%");
             pst.execute();
             rs = pst.getResultSet();
-            rs.last();
-            int max = rs.getRow();
-            results = new Business[max];
             rs.beforeFirst();
-            for (int a=0;a<max;a++) {
-                rs.next();
-                results[a] = new Business(rs.getString(1));
+            while(rs.next()){
+                results.put(
+                    rs.getString(1),
+                    new Business(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5)
+                ));
+            }
+            String searchLocs = "SELECT locationID,street,city,state,zip,lat,lon,businessName "
+                + "FROM businessLocations "
+                + "WHERE businessName like ?";
+            pst = StaticConnection.conn.prepareStatement(searchLocs);
+            pst.setString(1, "%" + query + "%");
+            pst.execute();
+            rs = pst.getResultSet();
+            rs.beforeFirst();
+            while(rs.next()){
+                results.get(rs.getString(8)).setLocations(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getInt(5),
+                    rs.getFloat(6),
+                    rs.getFloat(7)
+                );
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println(ex.getMessage());
         }
         finally {
@@ -623,7 +723,9 @@ public class DBconnection {
                 catch (Exception e) {}
             }
         }
-        return results;
+        Business[] businesses = new Business[results.size()];
+        results.values().toArray(businesses);
+        return businesses;
     }
     
     /*Business*/
