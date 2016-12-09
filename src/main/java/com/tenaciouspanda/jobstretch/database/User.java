@@ -19,6 +19,40 @@ public class User {
         latlng = new LatLng();
         DBconnection.setUser(this, userID);
     }
+    
+    public User(
+            int userID,
+            String userName,
+            String fname,
+            String lname,
+            String summary,
+            boolean employed,
+            Date startDate,
+            Date endDate,
+            String jobTitle,
+            String city,
+            String street,
+            String state,
+            int zip,
+            String business,
+            float lat,
+            float lon){
+        this.userID = userID;
+        this.userName = userName;
+        this.fname = fname;
+        this.lname = lname;
+        this.summary = summary;
+        this.employed = employed;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.jobTitle = jobTitle;
+        this.city = city;
+        this.street = street;
+        this.state = state;
+        this.zip = zip;
+        this.business = business;
+        this.latlng = new LatLng(lat, lon);
+    }
     /**
     * Initializes contact list for the user. Should be called after user logs in.
     * */

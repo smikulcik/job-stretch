@@ -10,7 +10,6 @@ import com.tenaciouspanda.jobstretch.Session;
 import com.tenaciouspanda.jobstretch.database.BusLocations;
 import com.tenaciouspanda.jobstretch.database.Business;
 import com.tenaciouspanda.jobstretch.database.User;
-import java.util.ArrayList;
 
 /**
  *
@@ -30,10 +29,17 @@ public class DashboardPanel extends CardSubpanel {
     
     @Override
     public void onShow(){
-        ArrayList<User> users = session.getCurrentUser().getContacts();
-        User[] userArray = new User[users.size()];
-        userArray = users.toArray(userArray);
-        showConnections(userArray);
+        refresh();
+    }
+    
+    public void refresh(){
+        if(companyMapRDB.isSelected()){
+            Business[] businesses = session.searchBusinesses(searchTextField.getText());
+            showCompanies(businesses);
+        }else{
+            User[] users = session.searchConnectedUser(searchTextField.getText());
+            showConnections(users);
+        }
     }
     
     public void showConnections(User[] users){
@@ -240,21 +246,15 @@ public class DashboardPanel extends CardSubpanel {
     }//GEN-LAST:event_addCompanyButtonActionPerformed
 
     private void companyMapRDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyMapRDBActionPerformed
-        // TODO add your handling code here:
+        refresh();
     }//GEN-LAST:event_companyMapRDBActionPerformed
 
     private void connectionMapRDBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionMapRDBActionPerformed
-        // TODO add your handling code here:
+        refresh();
     }//GEN-LAST:event_connectionMapRDBActionPerformed
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        if(companyMapRDB.isSelected()){
-            Business[] businesses = session.searchBusinesses(searchTextField.getText());
-            showCompanies(businesses);
-        }else{
-            User[] users = session.searchConnectedUser(searchTextField.getText());
-            showConnections(users);
-        }
+        refresh();
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void connectionListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectionListMouseClicked
