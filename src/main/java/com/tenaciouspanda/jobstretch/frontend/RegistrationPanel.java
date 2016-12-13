@@ -39,34 +39,27 @@ public class RegistrationPanel extends CardSubpanel {
         endYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(years));
         backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         registerButton.setIcon(new ImageIcon(this.getClass().getResource("/registerButton.png")));
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(18f);
-            Font sizedFont2 = font.deriveFont(32f);
-            registrationLabel.setFont(sizedFont2);
-            usernameLabel.setFont(sizedFont);
-            passwordLabel.setFont(sizedFont);
-            cityLabel.setFont(sizedFont);
-            companyNameLabel.setFont(sizedFont);
-            confirmPasswordLabel.setFont(sizedFont);
-            employmentStatusLabel.setFont(sizedFont);
-            endLabel.setFont(sizedFont);
-            firstNameLabel.setFont(sizedFont);
-            jLabel1.setFont(sizedFont);
-            jLabel5.setFont(sizedFont);
-            lastNameLabel.setFont(sizedFont);
-            occupationLabel.setFont(sizedFont);
-            startLabel.setFont(sizedFont);
-            stateLabel.setFont(sizedFont);
-            summaryLabel.setFont(sizedFont);
-            zipCodeLabel.setFont(sizedFont);
 
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Font sizedFont = view.getFont(18);
+        Font sizedFont2 = view.getFont(32);
+        registrationLabel.setFont(sizedFont2);
+        usernameLabel.setFont(sizedFont);
+        passwordLabel.setFont(sizedFont);
+        cityLabel.setFont(sizedFont);
+        companyNameLabel.setFont(sizedFont);
+        confirmPasswordLabel.setFont(sizedFont);
+        employmentStatusLabel.setFont(sizedFont);
+        endLabel.setFont(sizedFont);
+        firstNameLabel.setFont(sizedFont);
+        jLabel1.setFont(sizedFont);
+        jLabel5.setFont(sizedFont);
+        lastNameLabel.setFont(sizedFont);
+        occupationLabel.setFont(sizedFont);
+        startLabel.setFont(sizedFont);
+        stateLabel.setFont(sizedFont);
+        summaryLabel.setFont(sizedFont);
+        zipCodeLabel.setFont(sizedFont);
+
     }
     
     @Override

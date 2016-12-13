@@ -29,18 +29,9 @@ public class AddConnectionDeciderPanel extends CardSubpanel {
         backBtn.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         addConnBtn.setIcon(new ImageIcon(this.getClass().getResource("/existingButton.png")));
         addNewConnBtn.setIcon(new ImageIcon(this.getClass().getResource("/newConnectionButton.png")));
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(32f);
-            registrationLabel.setFont(sizedFont2);
-            
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        registrationLabel.setFont(view.getFont(32));
+
     }
 
     /**

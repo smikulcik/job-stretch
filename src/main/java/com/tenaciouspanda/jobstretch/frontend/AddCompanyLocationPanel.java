@@ -30,24 +30,14 @@ public class AddCompanyLocationPanel extends CardSubpanel {
         jLabel3.setIcon(new ImageIcon(this.getClass().getResource("/bgPanel.png")));
         backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         addBtn.setIcon(new ImageIcon(this.getClass().getResource("/addLocationButton.png")));
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(32f);
-            jLabel1.setFont(sizedFont);
-            businessNameLbl.setFont(sizedFont2);
-            jLabel2.setFont(sizedFont);
-            cityLabel.setFont(sizedFont);
-            stateLabel.setFont(sizedFont);
-            zipCodeLabel.setFont(sizedFont);
-            
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
+        jLabel1.setFont(view.getFont(24));
+        businessNameLbl.setFont(view.getFont(32));
+        jLabel2.setFont(view.getFont(24));
+        cityLabel.setFont(view.getFont(24));
+        stateLabel.setFont(view.getFont(24));
+        zipCodeLabel.setFont(view.getFont(24));
+
     }
 
     /**

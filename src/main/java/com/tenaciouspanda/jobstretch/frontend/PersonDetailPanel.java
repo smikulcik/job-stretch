@@ -32,26 +32,18 @@ public class PersonDetailPanel extends CardSubpanel {
         initComponents();
         backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         jLabel4.setIcon(new ImageIcon(this.getClass().getResource("/bgPanel.png")));
-        
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(32f);
-            Font sizedFont3 = font.deriveFont(14f);
-            name.setFont(sizedFont2);
-            jLabel2.setFont(sizedFont);
-            jLabel3.setFont(sizedFont);
-            address1.setFont(sizedFont3);
-            address2.setFont(sizedFont3);
-            occupation.setFont(sizedFont3);
-            summary.setFont(sizedFont3);
 
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Font sizedFont = view.getFont(24);
+        Font sizedFont2 = view.getFont(32);
+        Font sizedFont3 = view.getFont(14);
+        name.setFont(sizedFont2);
+        jLabel2.setFont(sizedFont);
+        jLabel3.setFont(sizedFont);
+        address1.setFont(sizedFont3);
+        address2.setFont(sizedFont3);
+        occupation.setFont(sizedFont3);
+        summary.setFont(sizedFont3);
+
     }
 
     

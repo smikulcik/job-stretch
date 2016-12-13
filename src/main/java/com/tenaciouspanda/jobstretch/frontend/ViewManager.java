@@ -7,8 +7,15 @@ package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
 import java.awt.CardLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 public class ViewManager extends JFrame {
@@ -17,11 +24,24 @@ public class ViewManager extends JFrame {
     private HashMap<String, CardSubpanel> cardLookup = new HashMap();
     private CardSubpanel currentSubpanel = null;
     
+    protected Font font;
+
     /**
      * Creates new form ViewManager
      */
     public ViewManager() {
         session = new Session();
+        
+        font = new JLabel().getFont();  // use default font at least
+        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(ViewManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         initComponents();
         setup();
         this.setTitle("Job Stretch");
@@ -74,6 +94,10 @@ public class ViewManager extends JFrame {
         pack();
         
     }
+    
+    public Font getFont(float size){
+      return font.deriveFont(size);
+    };
     
     void setStatus(String status){
         statusbar.setText(status);

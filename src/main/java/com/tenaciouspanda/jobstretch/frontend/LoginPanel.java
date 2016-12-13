@@ -32,24 +32,14 @@ public class LoginPanel extends CardSubpanel {
     public LoginPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
-       jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
-       jLabel1.setIcon(new ImageIcon(this.getClass().getResource("/logo.png")));
-       loginButton.setIcon(new ImageIcon(this.getClass().getResource("/LoginButton.png")));
-       loginButton.setBackground(new Color(0,0,0,0));
-       InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(18f);
-            jLabel2.setFont(sizedFont);
-            jLabel3.setFont(sizedFont);
-            registerButton.setFont(sizedFont2);
-            loginButton.setFont(sizedFont);
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel1.setIcon(new ImageIcon(this.getClass().getResource("/logo.png")));
+        loginButton.setIcon(new ImageIcon(this.getClass().getResource("/LoginButton.png")));
+        loginButton.setBackground(new Color(0,0,0,0));
+        jLabel2.setFont(view.getFont(24));
+        jLabel3.setFont(view.getFont(24));
+        registerButton.setFont(view.getFont(18));
+        loginButton.setFont(view.getFont(24));
 
     }
     

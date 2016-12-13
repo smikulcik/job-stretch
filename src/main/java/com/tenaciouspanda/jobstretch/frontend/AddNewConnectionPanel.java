@@ -33,33 +33,22 @@ public class AddNewConnectionPanel extends CardSubpanel {
         initComponents();
         backBtn.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         addBtn.setIcon(new ImageIcon(this.getClass().getResource("/addConnectionButton.png")));
-        
-                InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(14f);
-            Font sizedFont2 = font.deriveFont(32f);
-            registrationLabel.setFont(sizedFont2);
-            cityLabel.setFont(sizedFont);
-            companyNameLabel.setFont(sizedFont);
-            employmentStatusLabel.setFont(sizedFont);
-            endingLabel.setFont(sizedFont);
-            firstNameLabel.setFont(sizedFont);
-            jLabel1.setFont(sizedFont);
-            jLabel6.setFont(sizedFont);
-            lastNameLabel.setFont(sizedFont);
-            occupationLabel.setFont(sizedFont);
-            startLabel1.setFont(sizedFont);
-            stateLabel.setFont(sizedFont);
-            summaryLabel.setFont(sizedFont);
-            zipCodeLabel.setFont(sizedFont);
-            
-            
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        registrationLabel.setFont(view.getFont(32));
+        cityLabel.setFont(view.getFont(14));
+        companyNameLabel.setFont(view.getFont(14));
+        employmentStatusLabel.setFont(view.getFont(14));
+        endingLabel.setFont(view.getFont(14));
+        firstNameLabel.setFont(view.getFont(14));
+        jLabel1.setFont(view.getFont(14));
+        jLabel6.setFont(view.getFont(14));
+        lastNameLabel.setFont(view.getFont(14));
+        occupationLabel.setFont(view.getFont(14));
+        startLabel1.setFont(view.getFont(14));
+        stateLabel.setFont(view.getFont(14));
+        summaryLabel.setFont(view.getFont(14));
+        zipCodeLabel.setFont(view.getFont(14));
+
     }
 
     /**

@@ -31,18 +31,12 @@ public class UserFoundPanel extends CardSubpanel {
         initComponents();
         noButton.setIcon(new ImageIcon(this.getClass().getResource("/noButton.png")));
         yesButton.setIcon(new ImageIcon(this.getClass().getResource("/yesButton.png")));
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(32f);
-            userFoundLabel.setFont(sizedFont2);
-            claimUserLabel.setFont(sizedFont);
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        Font sizedFont = view.getFont(24);
+        Font sizedFont2 = view.getFont(32);
+        userFoundLabel.setFont(sizedFont2);
+        claimUserLabel.setFont(sizedFont);
+
     }
 
     /**

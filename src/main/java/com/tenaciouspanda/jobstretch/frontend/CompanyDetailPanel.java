@@ -35,31 +35,24 @@ public class CompanyDetailPanel extends CardSubpanel {
         backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         jPanel2.setBackground(new Color(0,0,0,50));
         addLocationBtn.setIcon(new ImageIcon(this.getClass().getResource("/addLocationButton.png")));
-               InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(32f);
-            Font sizedFont2 = font.deriveFont(24f);
-            Font sizedFont3 = font.deriveFont(18f);
-            Font sizedFont4 = font.deriveFont(14f);
-            jLabel1.setFont(sizedFont);
-            summaryLabel.setFont(sizedFont2);
-            businessNameLbl.setFont(sizedFont2);
-            industryLabel.setFont(sizedFont3);
-            foundedLabel.setFont(sizedFont3);
-            websiteLabel.setFont(sizedFont3);
-            jLabel2.setFont(sizedFont3);
-            industryLbl.setFont(sizedFont4);
-            foundedLbl.setFont(sizedFont4);
-            websiteLbl.setFont(sizedFont4);
-            locationsListBox.setFont(sizedFont4);
-            summaryTextBox.setFont(sizedFont4);
-            
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        Font sizedFont = view.getFont(32);
+        Font sizedFont2 = view.getFont(24);
+        Font sizedFont3 = view.getFont(18);
+        Font sizedFont4 = view.getFont(14);
+        jLabel1.setFont(sizedFont);
+        summaryLabel.setFont(sizedFont2);
+        businessNameLbl.setFont(sizedFont2);
+        industryLabel.setFont(sizedFont3);
+        foundedLabel.setFont(sizedFont3);
+        websiteLabel.setFont(sizedFont3);
+        jLabel2.setFont(sizedFont3);
+        industryLbl.setFont(sizedFont4);
+        foundedLbl.setFont(sizedFont4);
+        websiteLbl.setFont(sizedFont4);
+        locationsListBox.setFont(sizedFont4);
+        summaryTextBox.setFont(sizedFont4);
+
     }
     
     @Override

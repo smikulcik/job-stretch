@@ -41,23 +41,12 @@ public class AddCompanyPanel extends CardSubpanel {
         backBtn1.setIcon(new ImageIcon(this.getClass().getResource("/addCompanyButton.png")));
         backBtn.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(32f);
-            registrationLabel.setFont(sizedFont2);
-            jLabel1.setFont(sizedFont);
-            jLabel2.setFont(sizedFont);
-            jLabel3.setFont(sizedFont);
-            jLabel4.setFont(sizedFont);
-            jLabel5.setFont(sizedFont);
-            
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        registrationLabel.setFont(view.getFont(32));
+        jLabel1.setFont(view.getFont(24));
+        jLabel2.setFont(view.getFont(24));
+        jLabel3.setFont(view.getFont(24));
+        jLabel4.setFont(view.getFont(24));
+        jLabel5.setFont(view.getFont(24));
     }
 
     /**

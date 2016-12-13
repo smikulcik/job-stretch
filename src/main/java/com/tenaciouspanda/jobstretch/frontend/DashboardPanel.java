@@ -41,19 +41,12 @@ public class DashboardPanel extends CardSubpanel {
         viewConnectionDetailsButton.setIcon(new ImageIcon(this.getClass().getResource("/viewDetails.png")));
         connectionMapRDB.setBackground(new Color(0,0,0,0));
         companyMapRDB.setBackground(new Color(0,0,0,0));
-        
-        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
+
+            Font sizedFont = view.getFont(24);
             editUserProfileButton.setFont(sizedFont);
-            connectionMapRDB.setFont(font.deriveFont(16f));
-            companyMapRDB.setFont(font.deriveFont(16f));
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            connectionMapRDB.setFont(view.getFont(16));
+            companyMapRDB.setFont(view.getFont(16));
+
     }
     
     @Override

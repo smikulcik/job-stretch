@@ -31,13 +31,10 @@ public class UserProfilePanel extends CardSubpanel {
         backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
         AddEmploymentHistoryButton.setIcon(new ImageIcon(this.getClass().getResource("/addEmploymentButton.png")));
         
-                InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
-        try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-            Font sizedFont = font.deriveFont(24f);
-            Font sizedFont2 = font.deriveFont(32f);
-            Font sizedFont3 = font.deriveFont(14f);
-            Font sizedFont4 = font.deriveFont(12f);
+            Font sizedFont = view.getFont(24);
+            Font sizedFont2 = view.getFont(32);
+            Font sizedFont3 = view.getFont(14);
+            Font sizedFont4 = view.getFont(12);
             jLabel3.setFont(sizedFont2);
             avatarPlaceholder.setFont(sizedFont3);
             userSummaryLabel.setFont(sizedFont);
@@ -52,12 +49,7 @@ public class UserProfilePanel extends CardSubpanel {
             cityLabel.setFont(sizedFont3);
             stateLabel.setFont(sizedFont3);
             zipCodeLabel.setFont(sizedFont3);
-            
-        } catch (FontFormatException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         
     }
 
