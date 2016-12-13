@@ -43,4 +43,20 @@ public class Geocoder {
         }
         return new LatLng(0, 0);
     }
+    
+    public GeocodingResult geocodeGR(String location) {
+        if(context == null)
+            throw new IllegalStateException("Must initialize Geocoder before use");
+        
+        try {
+            GeocodingResult gr = GeocodingApi.geocode(context,
+                    location).await()[0];
+            return gr;
+        } catch (ArrayIndexOutOfBoundsException ex){
+            Logger.getLogger(Geocoder.class.getName()).log(Level.INFO, "no location found for {0}", location);
+        }catch (Exception ex) {
+            Logger.getLogger(Geocoder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

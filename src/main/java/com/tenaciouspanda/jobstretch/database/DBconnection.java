@@ -352,7 +352,64 @@ public class DBconnection {
             }
         }
     }
+    
+    /*Contacts*/
+    //add connection that does not have an account. userID refers to the user who is logged, not contact's userID. Untested.
+    public static boolean addNonexistantContact(int userID,
+            String fname, String lname, String city, String street, String state, 
+            Integer zip, String occu, String bus, float lat, float lon) {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            String addConnUT = "INSERT INTO userTable (fname, lname, employed) VALUES (?,?,?)";
+            pst = StaticConnection.conn.prepareStatement(addConnUT, PreparedStatement.RETURN_GENERATED_KEYS);
+            pst.setString(1, fname);
+            pst.setString(2, lname);
+            pst.setBoolean(3, true);
+            pst.execute();
+            rs = pst.getGeneratedKeys();
+            int newKey = 0;
+            if(rs.next())
+                newKey=rs.getInt(1);
             
+            
+            int locationID = getLocationID(bus,city,street,state,zip,lat, lon);
+            
+            String addConnE = "INSERT INTO employment (userID, startDate, endDate, jobTitle, businessInfoID) VALUES (?,?,?,?,?)";//username, password, 
+            pst = StaticConnection.conn.prepareStatement(addConnE);
+            pst.setInt(1, newKey);
+            java.sql.Date sqlDate = new java.sql.Date(0,0,0);
+            pst.setDate(2, sqlDate);
+            sqlDate = new java.sql.Date(0,0,0);
+            pst.setDate(3, sqlDate);
+            pst.setString(4, occu);
+            pst.setInt(5, locationID);
+            pst.execute();
+                
+            String addCon = "INSERT INTO connections VALUES (?,?), (?,?)";
+            pst = StaticConnection.conn.prepareStatement(addCon);
+            pst.setInt(1, userID);
+            pst.setInt(2, newKey);
+            pst.setInt(3, newKey);
+            pst.setInt(4, userID);
+            pst.execute();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            System.out.println(ex);
+            return false;
+        }		 
+        finally {
+            if(pst!=null) {
+                try {
+                    pst.close();
+                }
+                catch (Exception ex) {}
+                pst = null;
+            }
+        }
+        return true;
+    }
     
     /*Contacts*/
     //add connection that does not have an account. userID refers to the user who is logged, not contact's userID. Untested.
@@ -777,7 +834,7 @@ public class DBconnection {
         }
     }
     //find or add a business and it's location. Untested;
-    protected static int getLocationID(String busName, String city, String street, String state, int zip, float lat, float lon) {
+    protected static int getLocationID(String busName, String city, String street, String state, Integer zip, Float lat, Float lon) {
         PreparedStatement pst = null;
         ResultSet rs = null;
         int locationID=0;
@@ -804,7 +861,10 @@ public class DBconnection {
             pst.setString(2, city);
             pst.setString(3, street);
             pst.setString(4, state);
-            pst.setInt(5, zip);
+            if(zip == null)
+                pst.setNull(5, java.sql.Types.INTEGER);
+            else
+                pst.setInt(5, zip);
             pst.execute();
             rs = pst.getResultSet();
             if(!rs.next()) {
@@ -815,7 +875,10 @@ public class DBconnection {
                 pst.setString(2, city);
                 pst.setString(3, street);
                 pst.setString(4, state);
-                pst.setInt(5, zip);
+                if(zip == null)
+                    pst.setNull(5, java.sql.Types.INTEGER);
+                else
+                    pst.setInt(5, zip);
                 pst.setFloat(6, lat);
                 pst.setFloat(7, lon);
                 pst.execute();
@@ -827,6 +890,7 @@ public class DBconnection {
                 locationID=rs.getInt("locationID");
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println(ex.getMessage());
         }
         finally {
