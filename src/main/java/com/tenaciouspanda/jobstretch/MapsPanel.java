@@ -14,7 +14,6 @@ import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -27,7 +26,9 @@ import javafx.scene.Scene;
 public class MapsPanel extends JFXPanel implements MapComponentInitializedListener {
     GoogleMapView mapView;
     GoogleMap map;
-    CountDownLatch isInitialized = new CountDownLatch(1);
+    
+    private boolean isInitialized = false;
+    private final ArrayList<MapPanelInitializedListener> initListeners = new ArrayList();
     
     ArrayList<Marker> markers = new ArrayList();
     
@@ -48,6 +49,24 @@ public class MapsPanel extends JFXPanel implements MapComponentInitializedListen
             }
         });
     }
+    
+    private void setInitialized(boolean state) {
+        if(state == true && isInitialized == false){
+            fireListeners();
+        }
+        isInitialized = state;
+    }
+    public void addListener(MapPanelInitializedListener l){
+        initListeners.add(l);
+        if(isInitialized)
+            l.onInitialized();
+    }
+    
+    private void fireListeners(){
+        for(MapPanelInitializedListener l : initListeners){
+            l.onInitialized();
+        }
+    }
 
     @Override
     public void mapInitialized() {
@@ -64,54 +83,52 @@ public class MapsPanel extends JFXPanel implements MapComponentInitializedListen
                 .zoom(12);
 
         map = mapView.createMap(mapOptions);
-        isInitialized.countDown();
-
+        
+        setInitialized(true);
     }
     
     public void addMarker(final double lat, final double lon, final String name){
-        try {
-            isInitialized.await();
-            
-            // we must run these commands on the fx thread
-            Platform.runLater(new Runnable(){
-                @Override
-                public void run() {
-                    //Add a marker to the map
-                    MarkerOptions markerOptions = new MarkerOptions();
-                    
-                    markerOptions.position( new LatLong(lat, lon) )
-                            .visible(Boolean.TRUE)
-                            .title(name);
-                    
-                    Marker marker = new Marker( markerOptions );
-                    
-                    map.addMarker(marker);
-                    markers.add(marker);
-                    
-                    extendBounds(new LatLong(lat, lon));
-                    map.fitBounds(bounds);
-                }
-            });
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MapsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        if(!isInitialized){
+            Logger.getLogger(MapsPanel.class.getName()).log(Level.SEVERE, null, "map not initialized!!");
+            return;
         }
+
+        // we must run these commands on the fx thread
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                //Add a marker to the map
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                markerOptions.position( new LatLong(lat, lon) )
+                        .visible(Boolean.TRUE)
+                        .title(name);
+
+                Marker marker = new Marker( markerOptions );
+
+                map.addMarker(marker);
+                markers.add(marker);
+
+                extendBounds(new LatLong(lat, lon));
+                map.fitBounds(bounds);
+            }
+        });
     }
     public void clear(){
-        try {
-            isInitialized.await();
-            
-            // we must run these commands on the fx thread
-            Platform.runLater(new Runnable(){
-                @Override
-                public void run() {
-                    for(Marker m : markers)
-                        map.removeMarker(m);
-                    markers.clear();
-                }
-            });
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MapsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        
+        if(!isInitialized){
+            Logger.getLogger(MapsPanel.class.getName()).log(Level.SEVERE, null, "map not initialized!!");
+            return;
         }
+        // we must run these commands on the fx thread
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                for(Marker m : markers)
+                    map.removeMarker(m);
+                markers.clear();
+            }
+        });
     }
     private void extendBounds(LatLong loc){
         if(bounds == null){
