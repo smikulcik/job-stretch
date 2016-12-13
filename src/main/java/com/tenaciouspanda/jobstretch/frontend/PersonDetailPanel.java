@@ -8,6 +8,13 @@ package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
 import com.tenaciouspanda.jobstretch.database.User;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,6 +30,20 @@ public class PersonDetailPanel extends CardSubpanel {
     public PersonDetailPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
+        jLabel4.setIcon(new ImageIcon(this.getClass().getResource("/bgPanel.png")));
+
+        Font sizedFont = view.getFont(24);
+        Font sizedFont2 = view.getFont(32);
+        Font sizedFont3 = view.getFont(14);
+        name.setFont(sizedFont2);
+        jLabel2.setFont(sizedFont);
+        jLabel3.setFont(sizedFont);
+        address1.setFont(sizedFont3);
+        address2.setFont(sizedFont3);
+        occupation.setFont(sizedFont3);
+        summary.setFont(sizedFont3);
+
     }
 
     
@@ -46,99 +67,79 @@ public class PersonDetailPanel extends CardSubpanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        occupation = new javax.swing.JLabel();
-        summary = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        summary = new javax.swing.JLabel();
+        occupation = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
         address1 = new javax.swing.JLabel();
         address2 = new javax.swing.JLabel();
-        backButton = new javax.swing.JButton();
-        name = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setToolTipText("");
+        setLayout(null);
 
-        jLabel2.setText("Occupation:");
-
-        summary.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jLabel3.setText("Address:");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(summary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(occupation))
-                            .addComponent(address1)
-                            .addComponent(jLabel3)
-                            .addComponent(address2))
-                        .addGap(0, 173, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(occupation))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(address1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(address2)
-                .addGap(40, 40, 40)
-                .addComponent(summary, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        backButton.setText("Back");
+        backButton.setBorderPainted(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setFocusPainted(false);
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
             }
         });
+        add(backButton);
+        backButton.setBounds(10, 10, 130, 30);
 
-        name.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Occupation:");
+        add(jLabel2);
+        jLabel2.setBounds(310, 190, 120, 40);
+
+        jLabel3.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Address:");
+        add(jLabel3);
+        jLabel3.setBounds(310, 250, 130, 40);
+
+        summary.setBackground(new java.awt.Color(255, 204, 0));
+        summary.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        summary.setForeground(new java.awt.Color(255, 255, 255));
+        summary.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        add(summary);
+        summary.setBounds(250, 350, 390, 80);
+
+        occupation.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        occupation.setForeground(new java.awt.Color(255, 255, 255));
+        add(occupation);
+        occupation.setBounds(450, 190, 300, 40);
+
+        name.setFont(new java.awt.Font("Oswald", 0, 32)); // NOI18N
+        name.setForeground(new java.awt.Color(255, 153, 51));
+        name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         name.setText("Person Name");
+        add(name);
+        name.setBounds(220, 90, 430, 50);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addGap(30, 30, 30)
-                        .addComponent(name)))
-                .addContainerGap(95, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(backButton)
-                    .addComponent(name))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        address1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        address1.setForeground(new java.awt.Color(255, 255, 255));
+        add(address1);
+        address1.setBounds(450, 250, 300, 40);
+
+        address2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        address2.setForeground(new java.awt.Color(255, 255, 255));
+        add(address2);
+        address2.setBounds(450, 300, 300, 40);
+
+        jLabel4.setBackground(new java.awt.Color(153, 153, 153));
+        add(jLabel4);
+        jLabel4.setBounds(110, 80, 649, 370);
+
+        jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel5.setAlignmentY(0.0F);
+        add(jLabel5);
+        jLabel5.setBounds(0, 0, 867, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -152,7 +153,8 @@ public class PersonDetailPanel extends CardSubpanel {
     private javax.swing.JButton backButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel name;
     private javax.swing.JLabel occupation;
     private javax.swing.JLabel summary;

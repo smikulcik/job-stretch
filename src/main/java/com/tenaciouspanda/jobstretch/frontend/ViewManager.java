@@ -7,8 +7,15 @@ package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
 import java.awt.CardLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 public class ViewManager extends JFrame {
@@ -17,13 +24,27 @@ public class ViewManager extends JFrame {
     private HashMap<String, CardSubpanel> cardLookup = new HashMap();
     private CardSubpanel currentSubpanel = null;
     
+    protected Font font;
+
     /**
      * Creates new form ViewManager
      */
     public ViewManager() {
         session = new Session();
+        
+        font = new JLabel().getFont();  // use default font at least
+        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(ViewManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         initComponents();
         setup();
+        this.setTitle("Job Stretch");
     }
 
     private void setup(){
@@ -33,7 +54,6 @@ public class ViewManager extends JFrame {
         PersonDetailPanel pd = new PersonDetailPanel(session, this);
         RegistrationPanel rp = new RegistrationPanel(session, this);
         UserFoundPanel ufp = new UserFoundPanel(session, this);
-        UserProfilePanel upp = new UserProfilePanel(session, this);
         AddConnectionPanel acp = new AddConnectionPanel(session, this);
         AddNewConnectionPanel ancp = new AddNewConnectionPanel(session, this);
         AddConnectionDeciderPanel acdp = new AddConnectionDeciderPanel(session, this);
@@ -46,7 +66,6 @@ public class ViewManager extends JFrame {
         cardLookup.put("PersonDetailPanel", pd);
         cardLookup.put("RegistrationPanel", rp);
         cardLookup.put("UserFoundPanel", ufp);
-        cardLookup.put("UserProfilePanel", upp);
         cardLookup.put("AddConnectionPanel", acp);
         cardLookup.put("AddNewConnectionPanel", ancp);
         cardLookup.put("AddConnectionDeciderPanel", acdp);
@@ -74,6 +93,10 @@ public class ViewManager extends JFrame {
         
     }
     
+    public Font getFont(float size){
+      return font.deriveFont(size);
+    };
+    
     void setStatus(String status){
         statusbar.setText(status);
     }
@@ -91,11 +114,15 @@ public class ViewManager extends JFrame {
         statusbar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(867, 544));
+        setResizable(false);
+        getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
         cardPanel.setLayout(new java.awt.CardLayout());
-        getContentPane().add(cardPanel, java.awt.BorderLayout.CENTER);
-        getContentPane().add(statusbar, java.awt.BorderLayout.PAGE_END);
+        cardPanel.add(statusbar, "card3");
         statusbar.getAccessibleContext().setAccessibleName("Status");
+
+        getContentPane().add(cardPanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
