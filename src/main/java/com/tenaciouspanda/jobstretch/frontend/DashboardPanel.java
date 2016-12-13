@@ -6,6 +6,7 @@
 
 package com.tenaciouspanda.jobstretch.frontend;
 
+import com.tenaciouspanda.jobstretch.MapPanelInitializedListener;
 import com.tenaciouspanda.jobstretch.Session;
 import com.tenaciouspanda.jobstretch.database.BusLocations;
 import com.tenaciouspanda.jobstretch.database.Business;
@@ -70,25 +71,35 @@ public class DashboardPanel extends CardSubpanel {
         }
     }
     
-    public void showConnections(User[] users){
+    public void showConnections(final User[] users){
         connectionList.setListData(users);
+        mapsPanel.addListener(new MapPanelInitializedListener(){
+            @Override
+            public void onInitialized() {
+                mapsPanel.clear();
+                for(User u: users){
+                    if(u.getEmployed() == true)
+                        mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
+                }
+            }
+        });
         
-        mapsPanel.clear();
-        for(User u: users){
-            if(u.getEmployed() == true)
-                mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
-        }
         view.setStatus("Found " + users.length + " connections");
     }
 
-    public void showCompanies(Business[] businesses){
+    public void showCompanies(final Business[] businesses){
         connectionList.setListData(businesses);
         
-        mapsPanel.clear();
-        for(Business b: businesses){
-            for(BusLocations bl : b.getLocations())
-            mapsPanel.addMarker(bl.getLat(), bl.getLon(), b.toString());
-        }
+        mapsPanel.addListener(new MapPanelInitializedListener(){
+            @Override
+            public void onInitialized() {
+                mapsPanel.clear();
+                for(Business b: businesses){
+                    for(BusLocations bl : b.getLocations())
+                    mapsPanel.addMarker(bl.getLat(), bl.getLon(), b.toString());
+                }
+            }
+        });
         view.setStatus("Found " + businesses.length + " businesses");
     }
     
