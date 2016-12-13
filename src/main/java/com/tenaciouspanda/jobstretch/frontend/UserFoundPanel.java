@@ -7,6 +7,13 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -22,6 +29,20 @@ public class UserFoundPanel extends CardSubpanel {
     public UserFoundPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        noButton.setIcon(new ImageIcon(this.getClass().getResource("/noButton.png")));
+        yesButton.setIcon(new ImageIcon(this.getClass().getResource("/yesButton.png")));
+        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font sizedFont = font.deriveFont(24f);
+            Font sizedFont2 = font.deriveFont(32f);
+            userFoundLabel.setFont(sizedFont2);
+            claimUserLabel.setFont(sizedFont);
+        } catch (FontFormatException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -37,60 +58,50 @@ public class UserFoundPanel extends CardSubpanel {
         claimUserLabel = new javax.swing.JLabel();
         yesButton = new javax.swing.JButton();
         noButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+
+        setLayout(null);
 
         userFoundLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        userFoundLabel.setForeground(new java.awt.Color(255, 153, 51));
+        userFoundLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userFoundLabel.setText("User Found With Matching Information");
+        add(userFoundLabel);
+        userFoundLabel.setBounds(140, 40, 590, 90);
 
         claimUserLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        claimUserLabel.setForeground(new java.awt.Color(255, 255, 255));
+        claimUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         claimUserLabel.setText("Claim this User?");
+        add(claimUserLabel);
+        claimUserLabel.setBounds(330, 150, 210, 50);
 
-        yesButton.setText("Yes");
+        yesButton.setBorderPainted(false);
+        yesButton.setContentAreaFilled(false);
+        yesButton.setFocusPainted(false);
         yesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 yesButtonActionPerformed(evt);
             }
         });
+        add(yesButton);
+        yesButton.setBounds(280, 220, 140, 50);
 
-        noButton.setText("No");
+        noButton.setBorderPainted(false);
+        noButton.setContentAreaFilled(false);
+        noButton.setFocusPainted(false);
         noButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noButtonActionPerformed(evt);
             }
         });
+        add(noButton);
+        noButton.setBounds(440, 220, 140, 50);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(userFoundLabel)
-                .addGap(42, 42, 42))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(claimUserLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(yesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(noButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(98, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(userFoundLabel)
-                .addGap(18, 18, 18)
-                .addComponent(claimUserLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(yesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(noButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel5.setAlignmentY(0.0F);
+        add(jLabel5);
+        jLabel5.setBounds(0, 0, 867, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void yesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesButtonActionPerformed
@@ -104,6 +115,7 @@ public class UserFoundPanel extends CardSubpanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel claimUserLabel;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JButton noButton;
     private javax.swing.JLabel userFoundLabel;
     private javax.swing.JButton yesButton;

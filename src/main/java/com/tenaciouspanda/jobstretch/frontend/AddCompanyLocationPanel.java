@@ -7,6 +7,13 @@ package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
 import com.tenaciouspanda.jobstretch.database.Business;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,6 +27,27 @@ public class AddCompanyLocationPanel extends CardSubpanel {
     public AddCompanyLocationPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        jLabel3.setIcon(new ImageIcon(this.getClass().getResource("/bgPanel.png")));
+        backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
+        addBtn.setIcon(new ImageIcon(this.getClass().getResource("/addLocationButton.png")));
+        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font sizedFont = font.deriveFont(24f);
+            Font sizedFont2 = font.deriveFont(32f);
+            jLabel1.setFont(sizedFont);
+            businessNameLbl.setFont(sizedFont2);
+            jLabel2.setFont(sizedFont);
+            cityLabel.setFont(sizedFont);
+            stateLabel.setFont(sizedFont);
+            zipCodeLabel.setFont(sizedFont);
+            
+        } catch (FontFormatException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -36,102 +64,99 @@ public class AddCompanyLocationPanel extends CardSubpanel {
         businessNameLbl = new javax.swing.JLabel();
         streetAddressField = new javax.swing.JTextField();
         cityField = new javax.swing.JTextField();
-        stateComboBox = new javax.swing.JComboBox<>();
+        stateComboBox = new javax.swing.JComboBox<String>();
         zipCodeField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cityLabel = new javax.swing.JLabel();
         stateLabel = new javax.swing.JLabel();
         zipCodeLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
-        backButton.setText("Back");
+        setLayout(null);
+
+        backButton.setBorderPainted(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setFocusPainted(false);
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
             }
         });
+        add(backButton);
+        backButton.setBounds(10, 11, 140, 40);
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Company Profile");
+        add(jLabel1);
+        jLabel1.setBounds(170, 10, 220, 40);
 
         businessNameLbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        businessNameLbl.setForeground(new java.awt.Color(255, 153, 51));
+        businessNameLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         businessNameLbl.setText("CompanyName");
+        add(businessNameLbl);
+        businessNameLbl.setBounds(310, 90, 250, 60);
 
-        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "GU", "PR", "VI" }));
+        streetAddressField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(streetAddressField);
+        streetAddressField.setBounds(430, 210, 234, 32);
 
+        cityField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(cityField);
+        cityField.setBounds(430, 260, 141, 32);
+
+        stateComboBox.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "GU", "PR", "VI" }));
+        add(stateComboBox);
+        stateComboBox.setBounds(430, 310, 51, 32);
+
+        zipCodeField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(zipCodeField);
+        zipCodeField.setBounds(430, 360, 141, 32);
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Street Address");
+        add(jLabel2);
+        jLabel2.setBounds(220, 210, 190, 30);
 
+        cityLabel.setForeground(new java.awt.Color(255, 255, 255));
         cityLabel.setText("City");
+        add(cityLabel);
+        cityLabel.setBounds(220, 260, 120, 30);
 
+        stateLabel.setForeground(new java.awt.Color(255, 255, 255));
         stateLabel.setText("State");
+        add(stateLabel);
+        stateLabel.setBounds(220, 310, 100, 40);
 
+        zipCodeLabel.setForeground(new java.awt.Color(255, 255, 255));
         zipCodeLabel.setText("Zip Code");
+        add(zipCodeLabel);
+        zipCodeLabel.setBounds(220, 360, 100, 30);
 
-        addBtn.setText("Add");
+        addBtn.setBorderPainted(false);
+        addBtn.setContentAreaFilled(false);
+        addBtn.setFocusPainted(false);
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
             }
         });
+        add(addBtn);
+        addBtn.setBounds(650, 460, 190, 50);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(businessNameLbl))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(addBtn)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(cityLabel)
-                                .addComponent(stateLabel)
-                                .addComponent(zipCodeLabel))
-                            .addGap(57, 57, 57)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(streetAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(businessNameLbl))
-                    .addComponent(backButton))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(streetAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cityLabel)
-                    .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(stateLabel)
-                    .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(zipCodeLabel)
-                    .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addBtn)
-                .addContainerGap(121, Short.MAX_VALUE))
-        );
+        jLabel3.setBackground(new java.awt.Color(153, 153, 153));
+        add(jLabel3);
+        jLabel3.setBounds(110, 80, 649, 370);
+
+        jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel5.setAlignmentY(0.0F);
+        add(jLabel5);
+        jLabel5.setBounds(0, 0, 867, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -169,6 +194,8 @@ public class AddCompanyLocationPanel extends CardSubpanel {
     private javax.swing.JLabel cityLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JComboBox<String> stateComboBox;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField streetAddressField;

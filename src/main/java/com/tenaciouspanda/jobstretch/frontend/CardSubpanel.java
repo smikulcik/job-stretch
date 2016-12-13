@@ -24,5 +24,6 @@ public abstract class CardSubpanel extends JPanel{
     
     public void onShow(){};
     public void onHide(){};
+    
 
 }

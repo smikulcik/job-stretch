@@ -6,6 +6,13 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,6 +26,21 @@ public class AddConnectionDeciderPanel extends CardSubpanel {
     public AddConnectionDeciderPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        backBtn.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
+        addConnBtn.setIcon(new ImageIcon(this.getClass().getResource("/existingButton.png")));
+        addNewConnBtn.setIcon(new ImageIcon(this.getClass().getResource("/newConnectionButton.png")));
+        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font sizedFont = font.deriveFont(24f);
+            Font sizedFont2 = font.deriveFont(32f);
+            registrationLabel.setFont(sizedFont2);
+            
+        } catch (FontFormatException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -34,65 +56,54 @@ public class AddConnectionDeciderPanel extends CardSubpanel {
         registrationLabel = new javax.swing.JLabel();
         addConnBtn = new javax.swing.JButton();
         addNewConnBtn = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
-        backBtn.setText("Back");
+        setLayout(null);
+
+        backBtn.setBorderPainted(false);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setFocusPainted(false);
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
             }
         });
+        add(backBtn);
+        backBtn.setBounds(0, 10, 170, 40);
 
         registrationLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        registrationLabel.setForeground(new java.awt.Color(255, 153, 51));
         registrationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registrationLabel.setText("Add Connection");
+        add(registrationLabel);
+        registrationLabel.setBounds(320, 70, 240, 50);
 
-        addConnBtn.setText("Add Connection from Existing Users");
+        addConnBtn.setBorderPainted(false);
+        addConnBtn.setContentAreaFilled(false);
+        addConnBtn.setFocusPainted(false);
         addConnBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addConnBtnActionPerformed(evt);
             }
         });
+        add(addConnBtn);
+        addConnBtn.setBounds(320, 180, 238, 89);
 
-        addNewConnBtn.setText("Add New Connection");
+        addNewConnBtn.setBorderPainted(false);
+        addNewConnBtn.setContentAreaFilled(false);
+        addNewConnBtn.setFocusPainted(false);
         addNewConnBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewConnBtnActionPerformed(evt);
             }
         });
+        add(addNewConnBtn);
+        addNewConnBtn.setBounds(320, 280, 238, 89);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(backBtn)
-                        .addGap(60, 60, 60)
-                        .addComponent(registrationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(120, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(addConnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addNewConnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(119, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(backBtn))
-                    .addComponent(registrationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addConnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addNewConnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
-        );
+        jLabel6.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel6.setAlignmentY(0.0F);
+        add(jLabel6);
+        jLabel6.setBounds(0, 0, 870, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -112,6 +123,7 @@ public class AddConnectionDeciderPanel extends CardSubpanel {
     private javax.swing.JButton addConnBtn;
     private javax.swing.JButton addNewConnBtn;
     private javax.swing.JButton backBtn;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel registrationLabel;
     // End of variables declaration//GEN-END:variables
 }

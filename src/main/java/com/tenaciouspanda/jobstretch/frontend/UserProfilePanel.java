@@ -7,6 +7,13 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,6 +28,37 @@ public class UserProfilePanel extends CardSubpanel {
     public UserProfilePanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        backButton.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
+        AddEmploymentHistoryButton.setIcon(new ImageIcon(this.getClass().getResource("/addEmploymentButton.png")));
+        
+                InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font sizedFont = font.deriveFont(24f);
+            Font sizedFont2 = font.deriveFont(32f);
+            Font sizedFont3 = font.deriveFont(14f);
+            Font sizedFont4 = font.deriveFont(12f);
+            jLabel3.setFont(sizedFont2);
+            avatarPlaceholder.setFont(sizedFont3);
+            userSummaryLabel.setFont(sizedFont);
+            changeAvatarButton.setFont(sizedFont4);
+            editUserSummary.setFont(sizedFont3);
+            jLabel1.setFont(sizedFont);
+            jLabel2.setFont(sizedFont);
+            employmentStatusLabel.setFont(sizedFont3);
+            occupationLabel.setFont(sizedFont3);
+            companyNameLabel.setFont(sizedFont3);
+            jLabel4.setFont(sizedFont3);
+            cityLabel.setFont(sizedFont3);
+            stateLabel.setFont(sizedFont3);
+            zipCodeLabel.setFont(sizedFont3);
+            
+        } catch (FontFormatException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -40,12 +78,12 @@ public class UserProfilePanel extends CardSubpanel {
         avatarPlaceholder = new javax.swing.JLabel();
         changeAvatarButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         employmentStatusLabel = new javax.swing.JLabel();
-        employmentStatusComboBox = new javax.swing.JComboBox<>();
+        employmentStatusComboBox = new javax.swing.JComboBox<String>();
         occupationLabel = new javax.swing.JLabel();
         occupationField = new javax.swing.JTextField();
         companyNameLabel = new javax.swing.JLabel();
@@ -55,210 +93,198 @@ public class UserProfilePanel extends CardSubpanel {
         cityLabel = new javax.swing.JLabel();
         cityField = new javax.swing.JTextField();
         stateLabel = new javax.swing.JLabel();
-        stateComboBox = new javax.swing.JComboBox<>();
+        stateComboBox = new javax.swing.JComboBox<String>();
         zipCodeLabel = new javax.swing.JLabel();
         zipCodeField = new javax.swing.JTextField();
         AddEmploymentHistoryButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
-        userSummaryLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        setLayout(null);
+
+        userSummaryLabel.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        userSummaryLabel.setForeground(new java.awt.Color(255, 255, 255));
         userSummaryLabel.setText("Summary");
+        add(userSummaryLabel);
+        userSummaryLabel.setBounds(250, 120, 110, 40);
 
-        backButton.setText("Back");
+        backButton.setBorderPainted(false);
+        backButton.setContentAreaFilled(false);
+        backButton.setFocusPainted(false);
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
             }
         });
+        add(backButton);
+        backButton.setBounds(720, 480, 130, 30);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(jTextArea1);
 
-        editUserSummary.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        editUserSummary.setForeground(new java.awt.Color(0, 51, 255));
+        add(jScrollPane1);
+        jScrollPane1.setBounds(20, 160, 328, 130);
+
+        editUserSummary.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        editUserSummary.setForeground(new java.awt.Color(255, 153, 51));
         editUserSummary.setText("Edit");
         editUserSummary.setBorder(null);
         editUserSummary.setBorderPainted(false);
         editUserSummary.setContentAreaFilled(false);
+        editUserSummary.setFocusPainted(false);
         editUserSummary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editUserSummaryActionPerformed(evt);
             }
         });
+        add(editUserSummary);
+        editUserSummary.setBounds(300, 290, 60, 20);
 
-        avatarPlaceholder.setBackground(new java.awt.Color(153, 153, 153));
+        avatarPlaceholder.setBackground(new java.awt.Color(255, 255, 255));
+        avatarPlaceholder.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        avatarPlaceholder.setForeground(new java.awt.Color(255, 255, 255));
         avatarPlaceholder.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         avatarPlaceholder.setText("Avatar Placeholder");
-        avatarPlaceholder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        avatarPlaceholder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        add(avatarPlaceholder);
+        avatarPlaceholder.setBounds(20, 10, 116, 107);
 
-        changeAvatarButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        changeAvatarButton.setForeground(new java.awt.Color(0, 51, 255));
+        changeAvatarButton.setFont(new java.awt.Font("Oswald", 0, 12)); // NOI18N
+        changeAvatarButton.setForeground(new java.awt.Color(255, 153, 51));
         changeAvatarButton.setText("Upload / Change Avatar");
         changeAvatarButton.setBorder(null);
         changeAvatarButton.setBorderPainted(false);
         changeAvatarButton.setContentAreaFilled(false);
+        changeAvatarButton.setFocusPainted(false);
         changeAvatarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeAvatarButtonActionPerformed(evt);
             }
         });
+        add(changeAvatarButton);
+        changeAvatarButton.setBounds(10, 120, 130, 40);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setBackground(new java.awt.Color(0, 0, 0));
+        jList1.setForeground(new java.awt.Color(255, 255, 255));
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
+        jList1.setSelectionBackground(new java.awt.Color(255, 153, 51));
         jScrollPane2.setViewportView(jList1);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(jScrollPane2);
+        jScrollPane2.setBounds(20, 370, 330, 140);
+
+        jLabel1.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Past Employers");
+        add(jLabel1);
+        jLabel1.setBounds(180, 330, 200, 30);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Oswald", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Employment Data");
+        add(jLabel2);
+        jLabel2.setBounds(520, 20, 190, 30);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Oswald", 0, 32)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 153, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("User Profile");
+        add(jLabel3);
+        jLabel3.setBounds(190, 10, 160, 30);
 
+        employmentStatusLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        employmentStatusLabel.setForeground(new java.awt.Color(255, 255, 255));
         employmentStatusLabel.setText("Employment Status");
+        add(employmentStatusLabel);
+        employmentStatusLabel.setBounds(440, 80, 130, 20);
 
-        employmentStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employed", "Unemployed" }));
+        employmentStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Employed", "Unemployed" }));
+        employmentStatusComboBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(employmentStatusComboBox);
+        employmentStatusComboBox.setBounds(600, 70, 130, 30);
 
+        occupationLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        occupationLabel.setForeground(new java.awt.Color(255, 255, 255));
         occupationLabel.setText("Occupation");
+        add(occupationLabel);
+        occupationLabel.setBounds(440, 120, 100, 20);
 
+        occupationField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(occupationField);
+        occupationField.setBounds(600, 110, 130, 30);
+
+        companyNameLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        companyNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         companyNameLabel.setText("Company Name");
+        add(companyNameLabel);
+        companyNameLabel.setBounds(440, 150, 100, 30);
 
+        companyNameField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(companyNameField);
+        companyNameField.setBounds(600, 150, 130, 30);
+
+        jLabel4.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Street Address");
+        add(jLabel4);
+        jLabel4.setBounds(440, 190, 120, 30);
 
+        streetAddressField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(streetAddressField);
+        streetAddressField.setBounds(600, 190, 234, 30);
+
+        cityLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        cityLabel.setForeground(new java.awt.Color(255, 255, 255));
         cityLabel.setText("City");
+        add(cityLabel);
+        cityLabel.setBounds(440, 230, 40, 30);
 
+        cityField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(cityField);
+        cityField.setBounds(600, 230, 137, 30);
+
+        stateLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        stateLabel.setForeground(new java.awt.Color(255, 255, 255));
         stateLabel.setText("State");
+        add(stateLabel);
+        stateLabel.setBounds(440, 270, 50, 30);
 
-        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KY", "AR", "HA" }));
+        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "KY", "AR", "HA" }));
+        stateComboBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(stateComboBox);
+        stateComboBox.setBounds(600, 270, 70, 30);
 
+        zipCodeLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        zipCodeLabel.setForeground(new java.awt.Color(255, 255, 255));
         zipCodeLabel.setText("Zip Code");
+        add(zipCodeLabel);
+        zipCodeLabel.setBounds(440, 310, 60, 30);
 
-        AddEmploymentHistoryButton.setText("Add Employment History");
+        zipCodeField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(zipCodeField);
+        zipCodeField.setBounds(600, 310, 104, 30);
+
+        AddEmploymentHistoryButton.setBorderPainted(false);
+        AddEmploymentHistoryButton.setContentAreaFilled(false);
+        AddEmploymentHistoryButton.setFocusPainted(false);
         AddEmploymentHistoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddEmploymentHistoryButtonActionPerformed(evt);
             }
         });
+        add(AddEmploymentHistoryButton);
+        AddEmploymentHistoryButton.setBounds(480, 370, 200, 50);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(backButton)
-                .addGap(253, 253, 253)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(changeAvatarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(avatarPlaceholder, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(jLabel1))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(userSummaryLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(editUserSummary)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(occupationLabel)
-                            .addComponent(employmentStatusLabel)
-                            .addComponent(companyNameLabel)
-                            .addComponent(jLabel4)
-                            .addComponent(cityLabel)
-                            .addComponent(stateLabel)
-                            .addComponent(zipCodeLabel))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(streetAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(employmentStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(occupationField)
-                                .addComponent(companyNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(189, 189, 189))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(AddEmploymentHistoryButton)
-                        .addGap(126, 126, 126))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(backButton)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(userSummaryLabel)
-                            .addComponent(editUserSummary))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(avatarPlaceholder, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(employmentStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(employmentStatusLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(occupationLabel)
-                            .addComponent(occupationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(companyNameLabel)
-                            .addComponent(companyNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(streetAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cityLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(stateLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(zipCodeLabel))
-                        .addGap(18, 18, 18)
-                        .addComponent(AddEmploymentHistoryButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(changeAvatarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel5.setAlignmentY(0.0F);
+        add(jLabel5);
+        jLabel5.setBounds(0, 0, 867, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -294,6 +320,7 @@ public class UserProfilePanel extends CardSubpanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

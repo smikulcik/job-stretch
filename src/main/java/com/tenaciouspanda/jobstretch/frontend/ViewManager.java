@@ -24,6 +24,7 @@ public class ViewManager extends JFrame {
         session = new Session();
         initComponents();
         setup();
+        this.setTitle("Job Stretch");
     }
 
     private void setup(){
@@ -91,11 +92,15 @@ public class ViewManager extends JFrame {
         statusbar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(867, 544));
+        setResizable(false);
+        getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
         cardPanel.setLayout(new java.awt.CardLayout());
-        getContentPane().add(cardPanel, java.awt.BorderLayout.CENTER);
-        getContentPane().add(statusbar, java.awt.BorderLayout.PAGE_END);
+        cardPanel.add(statusbar, "card3");
         statusbar.getAccessibleContext().setAccessibleName("Status");
+
+        getContentPane().add(cardPanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

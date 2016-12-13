@@ -6,11 +6,18 @@
 
 package com.tenaciouspanda.jobstretch.frontend;
 
-import com.tenaciouspanda.jobstretch.MapPanelInitializedListener;
 import com.tenaciouspanda.jobstretch.Session;
 import com.tenaciouspanda.jobstretch.database.BusLocations;
 import com.tenaciouspanda.jobstretch.database.Business;
 import com.tenaciouspanda.jobstretch.database.User;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -26,6 +33,26 @@ public class DashboardPanel extends CardSubpanel {
     public DashboardPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        logoutButton.setIcon(new ImageIcon(this.getClass().getResource("/LogoutButton.png")));
+        refreshButton.setIcon(new ImageIcon(this.getClass().getResource("/Refresh.png")));
+        addConnectionButton.setIcon(new ImageIcon(this.getClass().getResource("/addConnectionButton.png")));
+        addCompanyButton.setIcon(new ImageIcon(this.getClass().getResource("/addCompanyButton.png")));
+        viewConnectionDetailsButton.setIcon(new ImageIcon(this.getClass().getResource("/viewDetails.png")));
+        connectionMapRDB.setBackground(new Color(0,0,0,0));
+        companyMapRDB.setBackground(new Color(0,0,0,0));
+        
+        InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font sizedFont = font.deriveFont(24f);
+            editUserProfileButton.setFont(sizedFont);
+            connectionMapRDB.setFont(font.deriveFont(16f));
+            companyMapRDB.setFont(font.deriveFont(16f));
+        } catch (FontFormatException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
@@ -43,35 +70,25 @@ public class DashboardPanel extends CardSubpanel {
         }
     }
     
-    public void showConnections(final User[] users){
+    public void showConnections(User[] users){
         connectionList.setListData(users);
-        mapsPanel.addListener(new MapPanelInitializedListener(){
-            @Override
-            public void onInitialized() {
-                mapsPanel.clear();
-                for(User u: users){
-                    if(u.getEmployed() == true)
-                        mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
-                }
-            }
-        });
         
+        mapsPanel.clear();
+        for(User u: users){
+            if(u.getEmployed() == true)
+                mapsPanel.addMarker(u.getLat(), u.getLon(), u.toString());
+        }
         view.setStatus("Found " + users.length + " connections");
     }
 
-    public void showCompanies(final Business[] businesses){
+    public void showCompanies(Business[] businesses){
         connectionList.setListData(businesses);
         
-        mapsPanel.addListener(new MapPanelInitializedListener(){
-            @Override
-            public void onInitialized() {
-                mapsPanel.clear();
-                for(Business b: businesses){
-                    for(BusLocations bl : b.getLocations())
-                    mapsPanel.addMarker(bl.getLat(), bl.getLon(), b.toString());
-                }
-            }
-        });
+        mapsPanel.clear();
+        for(Business b: businesses){
+            for(BusLocations bl : b.getLocations())
+            mapsPanel.addMarker(bl.getLat(), bl.getLon(), b.toString());
+        }
         view.setStatus("Found " + businesses.length + " businesses");
     }
     
@@ -101,39 +118,60 @@ public class DashboardPanel extends CardSubpanel {
         mapsPanel = new com.tenaciouspanda.jobstretch.MapsPanel();
         viewConnectionDetailsButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        connectionList = new javax.swing.JList<>();
+        connectionList = new javax.swing.JList<Object>();
         addConnectionButton = new javax.swing.JButton();
         editUserProfileButton = new javax.swing.JButton();
         addCompanyButton = new javax.swing.JButton();
         connectionMapRDB = new javax.swing.JRadioButton();
         companyMapRDB = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(820, 490));
+        setLayout(null);
 
-        logoutButton.setText("Log Out");
+        logoutButton.setBorderPainted(false);
+        logoutButton.setContentAreaFilled(false);
+        logoutButton.setFocusPainted(false);
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
             }
         });
+        add(logoutButton);
+        logoutButton.setBounds(40, 0, 240, 60);
 
         searchTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(searchTextField);
+        searchTextField.setBounds(440, 20, 328, 33);
 
-        refreshButton.setText("Refresh");
+        refreshButton.setBorderPainted(false);
+        refreshButton.setContentAreaFilled(false);
+        refreshButton.setFocusPainted(false);
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refreshButtonActionPerformed(evt);
             }
         });
+        add(refreshButton);
+        refreshButton.setBounds(790, 10, 60, 50);
+        add(mapsPanel);
+        mapsPanel.setBounds(360, 70, 490, 370);
 
-        viewConnectionDetailsButton.setText("View Details of Selected");
+        viewConnectionDetailsButton.setBorderPainted(false);
+        viewConnectionDetailsButton.setContentAreaFilled(false);
+        viewConnectionDetailsButton.setFocusPainted(false);
         viewConnectionDetailsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewConnectionDetailsButtonActionPerformed(evt);
             }
         });
+        add(viewConnectionDetailsButton);
+        viewConnectionDetailsButton.setBounds(10, 410, 300, 48);
 
+        connectionList.setBackground(new java.awt.Color(0, 0, 0));
         connectionList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        connectionList.setForeground(new java.awt.Color(255, 255, 255));
+        connectionList.setSelectionBackground(new java.awt.Color(255, 153, 51));
         connectionList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 connectionListMouseClicked(evt);
@@ -141,102 +179,75 @@ public class DashboardPanel extends CardSubpanel {
         });
         jScrollPane1.setViewportView(connectionList);
 
-        addConnectionButton.setText("Add Connection");
+        add(jScrollPane1);
+        jScrollPane1.setBounds(10, 70, 300, 330);
+
+        addConnectionButton.setBorderPainted(false);
+        addConnectionButton.setContentAreaFilled(false);
+        addConnectionButton.setFocusPainted(false);
         addConnectionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addConnectionButtonActionPerformed(evt);
             }
         });
+        add(addConnectionButton);
+        addConnectionButton.setBounds(360, 450, 240, 50);
 
+        editUserProfileButton.setBackground(new java.awt.Color(255, 153, 51));
+        editUserProfileButton.setForeground(new java.awt.Color(255, 153, 51));
         editUserProfileButton.setText("Edit User Profile");
+        editUserProfileButton.setBorderPainted(false);
+        editUserProfileButton.setContentAreaFilled(false);
+        editUserProfileButton.setFocusPainted(false);
         editUserProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editUserProfileButtonActionPerformed(evt);
             }
         });
+        add(editUserProfileButton);
+        editUserProfileButton.setBounds(10, 460, 300, 50);
 
-        addCompanyButton.setText("Add Company");
+        addCompanyButton.setBorderPainted(false);
+        addCompanyButton.setContentAreaFilled(false);
+        addCompanyButton.setFocusPainted(false);
         addCompanyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addCompanyButtonActionPerformed(evt);
             }
         });
+        add(addCompanyButton);
+        addCompanyButton.setBounds(610, 450, 240, 50);
 
         mapTypeRDBGroup.add(connectionMapRDB);
+        connectionMapRDB.setForeground(new java.awt.Color(255, 255, 255));
         connectionMapRDB.setSelected(true);
         connectionMapRDB.setText("Connection Map");
+        connectionMapRDB.setContentAreaFilled(false);
         connectionMapRDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 connectionMapRDBActionPerformed(evt);
             }
         });
+        add(connectionMapRDB);
+        connectionMapRDB.setBounds(310, 10, 130, 23);
 
         mapTypeRDBGroup.add(companyMapRDB);
+        companyMapRDB.setForeground(new java.awt.Color(255, 255, 255));
         companyMapRDB.setText("Company Map");
+        companyMapRDB.setContentAreaFilled(false);
         companyMapRDB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 companyMapRDBActionPerformed(evt);
             }
         });
+        add(companyMapRDB);
+        companyMapRDB.setBounds(310, 40, 120, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(addConnectionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(addCompanyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-                            .addComponent(mapsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(logoutButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(editUserProfileButton)
-                        .addGap(93, 93, 93)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(connectionMapRDB)
-                            .addComponent(companyMapRDB))
-                        .addGap(18, 18, 18)
-                        .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(refreshButton)))
-                .addGap(26, 26, 26))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(refreshButton)
-                        .addComponent(logoutButton)
-                        .addComponent(editUserProfileButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(connectionMapRDB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(companyMapRDB)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                    .addComponent(mapsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addConnectionButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addCompanyButton))
-                    .addComponent(viewConnectionDetailsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel5.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel5.setAlignmentY(0.0F);
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        add(jLabel5);
+        jLabel5.setBounds(0, 0, 867, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -285,6 +296,7 @@ public class DashboardPanel extends CardSubpanel {
     private javax.swing.JList<Object> connectionList;
     private javax.swing.JRadioButton connectionMapRDB;
     private javax.swing.JButton editUserProfileButton;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;
     private javax.swing.ButtonGroup mapTypeRDBGroup;

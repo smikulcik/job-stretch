@@ -1,12 +1,17 @@
 package com.tenaciouspanda.jobstretch.frontend;
 
 import com.tenaciouspanda.jobstretch.Session;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,6 +31,35 @@ public class AddNewConnectionPanel extends CardSubpanel {
     public AddNewConnectionPanel(Session session, ViewManager theView) {
         super(session, theView);
         initComponents();
+        backBtn.setIcon(new ImageIcon(this.getClass().getResource("/backButton.png")));
+        addBtn.setIcon(new ImageIcon(this.getClass().getResource("/addConnectionButton.png")));
+        
+                InputStream is = this.getClass().getResourceAsStream("/Oswald-Regular.ttf");
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font sizedFont = font.deriveFont(14f);
+            Font sizedFont2 = font.deriveFont(32f);
+            registrationLabel.setFont(sizedFont2);
+            cityLabel.setFont(sizedFont);
+            companyNameLabel.setFont(sizedFont);
+            employmentStatusLabel.setFont(sizedFont);
+            endingLabel.setFont(sizedFont);
+            firstNameLabel.setFont(sizedFont);
+            jLabel1.setFont(sizedFont);
+            jLabel6.setFont(sizedFont);
+            lastNameLabel.setFont(sizedFont);
+            occupationLabel.setFont(sizedFont);
+            startLabel1.setFont(sizedFont);
+            stateLabel.setFont(sizedFont);
+            summaryLabel.setFont(sizedFont);
+            zipCodeLabel.setFont(sizedFont);
+            
+            
+        } catch (FontFormatException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -37,7 +71,7 @@ public class AddNewConnectionPanel extends CardSubpanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        employmentStatusComboBox = new javax.swing.JComboBox<>();
+        employmentStatusComboBox = new javax.swing.JComboBox<String>();
         employmentStatusLabel = new javax.swing.JLabel();
         occupationLabel = new javax.swing.JLabel();
         companyNameLabel = new javax.swing.JLabel();
@@ -51,234 +85,219 @@ public class AddNewConnectionPanel extends CardSubpanel {
         companyNameField = new javax.swing.JTextField();
         streetAddressField = new javax.swing.JTextField();
         cityField = new javax.swing.JTextField();
-        stateComboBox = new javax.swing.JComboBox<>();
+        stateComboBox = new javax.swing.JComboBox<String>();
         zipCodeField = new javax.swing.JTextField();
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         summaryTextArea = new javax.swing.JTextArea();
-        startLabel = new javax.swing.JLabel();
-        startMonthComboBox = new javax.swing.JComboBox<>();
-        startDayComboBox = new javax.swing.JComboBox<>();
-        startYearComboBox = new javax.swing.JComboBox<>();
-        endMonthComboBox = new javax.swing.JComboBox<>();
-        endDayComboBox = new javax.swing.JComboBox<>();
-        endYearComboBox = new javax.swing.JComboBox<>();
+        endingLabel = new javax.swing.JLabel();
+        startMonthComboBox = new javax.swing.JComboBox<String>();
+        startDayComboBox = new javax.swing.JComboBox<String>();
+        startYearComboBox = new javax.swing.JComboBox<String>();
+        endMonthComboBox = new javax.swing.JComboBox<String>();
+        endDayComboBox = new javax.swing.JComboBox<String>();
+        endYearComboBox = new javax.swing.JComboBox<String>();
         backBtn = new javax.swing.JButton();
         summaryLabel = new javax.swing.JLabel();
         registrationLabel = new javax.swing.JLabel();
         addBtn = new javax.swing.JButton();
+        startLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
-        employmentStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employed", "Unemployed" }));
+        setLayout(null);
 
+        employmentStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Employed", "Unemployed" }));
+        employmentStatusComboBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(employmentStatusComboBox);
+        employmentStatusComboBox.setBounds(240, 170, 140, 30);
+
+        employmentStatusLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        employmentStatusLabel.setForeground(new java.awt.Color(255, 255, 255));
         employmentStatusLabel.setText("Employment Status");
+        add(employmentStatusLabel);
+        employmentStatusLabel.setBounds(90, 170, 140, 30);
 
+        occupationLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        occupationLabel.setForeground(new java.awt.Color(255, 255, 255));
         occupationLabel.setText("Occupation");
+        add(occupationLabel);
+        occupationLabel.setBounds(90, 210, 110, 30);
 
+        companyNameLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        companyNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         companyNameLabel.setText("Company Name");
+        add(companyNameLabel);
+        companyNameLabel.setBounds(90, 250, 130, 30);
 
+        jLabel1.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Street Address");
+        add(jLabel1);
+        jLabel1.setBounds(90, 290, 140, 30);
 
+        cityLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        cityLabel.setForeground(new java.awt.Color(255, 255, 255));
         cityLabel.setText("City");
+        add(cityLabel);
+        cityLabel.setBounds(90, 330, 70, 30);
 
+        stateLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        stateLabel.setForeground(new java.awt.Color(255, 255, 255));
         stateLabel.setText("State");
+        add(stateLabel);
+        stateLabel.setBounds(90, 370, 70, 30);
 
+        zipCodeLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        zipCodeLabel.setForeground(new java.awt.Color(255, 255, 255));
         zipCodeLabel.setText("Zip Code");
+        add(zipCodeLabel);
+        zipCodeLabel.setBounds(90, 410, 100, 30);
 
-        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KY", "AR", "HA" }));
+        firstNameField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(firstNameField);
+        firstNameField.setBounds(240, 90, 138, 30);
 
+        lastNameField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(lastNameField);
+        lastNameField.setBounds(240, 130, 138, 30);
+
+        occupationField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(occupationField);
+        occupationField.setBounds(240, 210, 138, 30);
+
+        companyNameField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        companyNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                companyNameFieldActionPerformed(evt);
+            }
+        });
+        add(companyNameField);
+        companyNameField.setBounds(240, 250, 138, 30);
+
+        streetAddressField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(streetAddressField);
+        streetAddressField.setBounds(240, 290, 137, 30);
+
+        cityField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(cityField);
+        cityField.setBounds(240, 330, 137, 30);
+
+        stateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "KY", "AR", "HA" }));
+        add(stateComboBox);
+        stateComboBox.setBounds(240, 370, 70, 30);
+
+        zipCodeField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add(zipCodeField);
+        zipCodeField.setBounds(240, 410, 137, 30);
+
+        firstNameLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        firstNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         firstNameLabel.setText("First Name");
+        add(firstNameLabel);
+        firstNameLabel.setBounds(90, 90, 90, 30);
 
+        lastNameLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        lastNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         lastNameLabel.setText("Last Name");
+        add(lastNameLabel);
+        lastNameLabel.setBounds(90, 130, 90, 30);
 
         summaryTextArea.setColumns(20);
         summaryTextArea.setRows(5);
+        summaryTextArea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(summaryTextArea);
 
-        startLabel.setText("Start Date");
+        add(jScrollPane1);
+        jScrollPane1.setBounds(470, 120, 307, 113);
 
-        startMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        endingLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        endingLabel.setForeground(new java.awt.Color(255, 255, 255));
+        endingLabel.setText("End Date");
+        add(endingLabel);
+        endingLabel.setBounds(470, 340, 110, 30);
+
+        startMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         startMonthComboBox.setToolTipText("");
         startMonthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startMonthComboBoxActionPerformed(evt);
             }
         });
+        add(startMonthComboBox);
+        startMonthComboBox.setBounds(520, 380, 50, 30);
 
-        startDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        startDayComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        add(startDayComboBox);
+        startDayComboBox.setBounds(520, 300, 50, 30);
 
-        startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016" }));
+        startYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2016" }));
+        add(startYearComboBox);
+        startYearComboBox.setBounds(570, 380, 80, 30);
 
-        endMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        endMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         endMonthComboBox.setToolTipText("");
         endMonthComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 endMonthComboBoxActionPerformed(evt);
             }
         });
+        add(endMonthComboBox);
+        endMonthComboBox.setBounds(470, 300, 50, 30);
 
-        endDayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        endDayComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        add(endDayComboBox);
+        endDayComboBox.setBounds(470, 380, 50, 30);
 
-        endYearComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016" }));
+        endYearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2016" }));
+        add(endYearComboBox);
+        endYearComboBox.setBounds(570, 300, 80, 30);
 
-        backBtn.setText("Back");
+        backBtn.setBorderPainted(false);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setFocusPainted(false);
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
             }
         });
+        add(backBtn);
+        backBtn.setBounds(10, 10, 130, 30);
 
+        summaryLabel.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        summaryLabel.setForeground(new java.awt.Color(255, 255, 255));
         summaryLabel.setText("Summary");
+        add(summaryLabel);
+        summaryLabel.setBounds(470, 90, 220, 30);
 
-        registrationLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        registrationLabel.setFont(new java.awt.Font("Oswald", 0, 32)); // NOI18N
+        registrationLabel.setForeground(new java.awt.Color(255, 153, 51));
         registrationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registrationLabel.setText("Add New Connection");
+        add(registrationLabel);
+        registrationLabel.setBounds(260, 10, 350, 40);
 
-        addBtn.setText("Add");
+        addBtn.setBorderPainted(false);
+        addBtn.setContentAreaFilled(false);
+        addBtn.setFocusPainted(false);
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
             }
         });
+        add(addBtn);
+        addBtn.setBounds(600, 450, 220, 50);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(backBtn)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(startLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(startMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(startDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(startYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(endMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(endDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(endYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(registrationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(322, 322, 322)
-                                .addComponent(summaryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(260, 260, 260))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addBtn)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(employmentStatusLabel)
-                        .addComponent(firstNameLabel)
-                        .addComponent(lastNameLabel)
-                        .addComponent(occupationLabel)
-                        .addComponent(companyNameLabel)
-                        .addComponent(jLabel1)
-                        .addComponent(cityLabel)
-                        .addComponent(stateLabel)
-                        .addComponent(zipCodeLabel))
-                    .addGap(57, 57, 57)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(zipCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lastNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(employmentStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(firstNameField)
-                                .addComponent(occupationField)
-                                .addComponent(companyNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(streetAddressField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cityField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)))
-                    .addContainerGap(409, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(backBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(registrationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(summaryLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(startLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(startMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(endMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endDayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endYearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addBtn)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(63, 63, 63)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(firstNameLabel))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lastNameLabel))
-                    .addGap(18, 33, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(employmentStatusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(employmentStatusLabel))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(occupationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(occupationLabel))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(companyNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(companyNameLabel))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(streetAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cityLabel)
-                        .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(stateLabel)
-                        .addComponent(stateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(zipCodeLabel)
-                            .addGap(8, 8, 8))
-                        .addComponent(zipCodeField))
-                    .addContainerGap()))
-        );
+        startLabel1.setFont(new java.awt.Font("Oswald", 0, 14)); // NOI18N
+        startLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        startLabel1.setText("Start Date");
+        add(startLabel1);
+        startLabel1.setBounds(470, 260, 110, 30);
+
+        jLabel6.setIcon(new ImageIcon(this.getClass().getResource("/bg.png")));
+        jLabel6.setAlignmentY(0.0F);
+        add(jLabel6);
+        jLabel6.setBounds(0, 0, 870, 544);
     }// </editor-fold>//GEN-END:initComponents
 
     private void startMonthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMonthComboBoxActionPerformed
@@ -369,6 +388,10 @@ public class AddNewConnectionPanel extends CardSubpanel {
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
+    private void companyNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_companyNameFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
@@ -382,9 +405,11 @@ public class AddNewConnectionPanel extends CardSubpanel {
     private javax.swing.JComboBox<String> endDayComboBox;
     private javax.swing.JComboBox<String> endMonthComboBox;
     private javax.swing.JComboBox<String> endYearComboBox;
+    private javax.swing.JLabel endingLabel;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JLabel lastNameLabel;
@@ -392,7 +417,7 @@ public class AddNewConnectionPanel extends CardSubpanel {
     private javax.swing.JLabel occupationLabel;
     private javax.swing.JLabel registrationLabel;
     private javax.swing.JComboBox<String> startDayComboBox;
-    private javax.swing.JLabel startLabel;
+    private javax.swing.JLabel startLabel1;
     private javax.swing.JComboBox<String> startMonthComboBox;
     private javax.swing.JComboBox<String> startYearComboBox;
     private javax.swing.JComboBox<String> stateComboBox;
