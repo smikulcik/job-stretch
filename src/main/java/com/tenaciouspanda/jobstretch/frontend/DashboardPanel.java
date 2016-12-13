@@ -42,10 +42,9 @@ public class DashboardPanel extends CardSubpanel {
         connectionMapRDB.setBackground(new Color(0,0,0,0));
         companyMapRDB.setBackground(new Color(0,0,0,0));
 
-            Font sizedFont = view.getFont(24);
-            editUserProfileButton.setFont(sizedFont);
-            connectionMapRDB.setFont(view.getFont(16));
-            companyMapRDB.setFont(view.getFont(16));
+        Font sizedFont = view.getFont(24);
+        connectionMapRDB.setFont(view.getFont(16));
+        companyMapRDB.setFont(view.getFont(16));
 
     }
     
@@ -122,9 +121,8 @@ public class DashboardPanel extends CardSubpanel {
         mapsPanel = new com.tenaciouspanda.jobstretch.MapsPanel();
         viewConnectionDetailsButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        connectionList = new javax.swing.JList<Object>();
+        connectionList = new javax.swing.JList<>();
         addConnectionButton = new javax.swing.JButton();
-        editUserProfileButton = new javax.swing.JButton();
         addCompanyButton = new javax.swing.JButton();
         connectionMapRDB = new javax.swing.JRadioButton();
         companyMapRDB = new javax.swing.JRadioButton();
@@ -197,20 +195,6 @@ public class DashboardPanel extends CardSubpanel {
         add(addConnectionButton);
         addConnectionButton.setBounds(360, 450, 240, 50);
 
-        editUserProfileButton.setBackground(new java.awt.Color(255, 153, 51));
-        editUserProfileButton.setForeground(new java.awt.Color(255, 153, 51));
-        editUserProfileButton.setText("Edit User Profile");
-        editUserProfileButton.setBorderPainted(false);
-        editUserProfileButton.setContentAreaFilled(false);
-        editUserProfileButton.setFocusPainted(false);
-        editUserProfileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editUserProfileButtonActionPerformed(evt);
-            }
-        });
-        add(editUserProfileButton);
-        editUserProfileButton.setBounds(10, 460, 300, 50);
-
         addCompanyButton.setBorderPainted(false);
         addCompanyButton.setContentAreaFilled(false);
         addCompanyButton.setFocusPainted(false);
@@ -263,10 +247,6 @@ public class DashboardPanel extends CardSubpanel {
         this.view.displayView("AddConnectionDeciderPanel");
     }//GEN-LAST:event_addConnectionButtonActionPerformed
 
-    private void editUserProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserProfileButtonActionPerformed
-        this.view.displayView("UserProfilePanel");
-    }//GEN-LAST:event_editUserProfileButtonActionPerformed
-
     private void addCompanyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCompanyButtonActionPerformed
         this.view.displayView("AddCompanyPanel");
     }//GEN-LAST:event_addCompanyButtonActionPerformed
@@ -299,7 +279,6 @@ public class DashboardPanel extends CardSubpanel {
     private javax.swing.JRadioButton companyMapRDB;
     private javax.swing.JList<Object> connectionList;
     private javax.swing.JRadioButton connectionMapRDB;
-    private javax.swing.JButton editUserProfileButton;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logoutButton;

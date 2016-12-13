@@ -54,7 +54,6 @@ public class ViewManager extends JFrame {
         PersonDetailPanel pd = new PersonDetailPanel(session, this);
         RegistrationPanel rp = new RegistrationPanel(session, this);
         UserFoundPanel ufp = new UserFoundPanel(session, this);
-        UserProfilePanel upp = new UserProfilePanel(session, this);
         AddConnectionPanel acp = new AddConnectionPanel(session, this);
         AddNewConnectionPanel ancp = new AddNewConnectionPanel(session, this);
         AddConnectionDeciderPanel acdp = new AddConnectionDeciderPanel(session, this);
@@ -67,7 +66,6 @@ public class ViewManager extends JFrame {
         cardLookup.put("PersonDetailPanel", pd);
         cardLookup.put("RegistrationPanel", rp);
         cardLookup.put("UserFoundPanel", ufp);
-        cardLookup.put("UserProfilePanel", upp);
         cardLookup.put("AddConnectionPanel", acp);
         cardLookup.put("AddNewConnectionPanel", ancp);
         cardLookup.put("AddConnectionDeciderPanel", acdp);
